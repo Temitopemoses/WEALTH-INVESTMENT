@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WealthWise Investment</title>
+    <link rel="icon" href="img\20240903_184039.png" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Verdana, sans-serif;
             background-color: #f4f6f9;
         }
 
@@ -18,12 +19,13 @@
         }
 
         .navbar-brand img {
-            width: 150px; /* Adjust logo size */
-            height: auto;
+            width: 170px;
+            height: 100px;
         }
 
         .navbar-nav .nav-link {
             color: #181717;
+            font-size: 12px;
         }
 
         .navbar-nav .nav-link:hover {
@@ -31,7 +33,7 @@
         }
 
         .navbar-toggler {
-            border-color: #ffffff; /* Optional: change the border color to match */
+            border-color: #ffffff;
         }
 
         .navbar-toggler-icon {
@@ -44,6 +46,7 @@
 
         .dropdown-item {
             color: #000000;
+            font-size: 12px;
         }
 
         .dropdown-item:hover {
@@ -51,18 +54,14 @@
             color: #ffd700;
         }
 
-        .container-dashboard {
-            padding: 2rem;
-        }
-
         .header-image {
             width: 100%;
-            height: 200px; /* Small height */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
+            height: 150px;
+            object-fit: cover;
             margin-bottom: 1.5rem;
         }
 
-        .dashboard-card {
+        .dashboard-card, .tradingview-widget-container {
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 1rem;
@@ -71,14 +70,57 @@
         }
 
         .card {
-            border: 2px solid #eceef0; /* Adds a border to the card */
+            border: 1px solid #eceef0;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: rgb(199, 197, 216) 4px 8px 9px -2px;
         }
 
         .btn-long {
-            width: 100%; /* Makes the button take the full width */
+            width: 100%;
         }
+
+        .form-control, .form-select {
+            font-size: 0.875rem;
+        }
+
+        .footer {
+            background-color: #eceef0;
+            padding: 1rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer span {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        h3.card-title {
+            font-size: 1.1rem; /* Larger size for prominence */
+        }
+
+          
+        .tradingview-widget-container {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .tradingview-widget-container {
+                padding: 0.5rem;
+                margin-top: 1rem;
+            }
+        }
+
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
+
     </style>
 </head>
 <body>
@@ -86,8 +128,7 @@
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <!-- Logo Section -->
-        <a class="navbar-brand" href="?a=account">
+        <a class="navbar-brand" href="#">
             <img src="img/20240903_184039.png" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,7 +143,7 @@
                     <a class="nav-link" href="deposit.html"><i class="fas fa-upload"></i> Deposit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-download"></i> Withdraw</a>
+                    <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?a=internal_transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
@@ -133,21 +174,19 @@
 </nav>
 
 <!-- Full-Width Image -->
-<img src="img/Financial-business-statistics.jpeg" alt="Dashboard Header" class="header-image">
+<img src="img/Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 offset-md-3 grid-margin stretch-card">
+        <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Make Deposit</h3>
                     <p class="card-description"><small>Fill the form below</small></p>
-
                     <form method="post" name="spendform" class="forms-sample">
-                        <div class="form-group">
-                            <label class="form-control-label">Choose Plan: <span class="tx-danger">*</span></label>
-                        
-                    <select name="" class="form-control select2">
+                        <div class="mb-3">
+                            <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
+                            <select name="" class="form-select">
                                 <option value="">Choose Plan</option>
                                 <option value="1">Meta Trade Account</option>
                                 <option value="2">Stock Market Account</option>
@@ -157,12 +196,12 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-control-label">Enter Amount: <span class="tx-danger">*</span></label>
+                        <div class="mb-3">
+                            <label class="form-label">Enter Amount: <span class="tx-danger">*</span></label>
                             <input type="text" name="amount" value="30.00" placeholder="10" class="form-control">
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <p>Select Payment Option</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="type" value="process_1000">
@@ -185,50 +224,34 @@
         </div>
     </div>
 
-    <!-- Carousel -->
-    <div id="cryptoCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
-        <div class="carousel-inner" id="crypto-carousel-content">
-            <!-- Dynamic content will be inserted here -->
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#cryptoCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#cryptoCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+  <!-- TradingView Widget -->
+<div class="col-md-6 offset-md-3">
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+        {
+        "width": "100%",
+        "height": "490",
+        "defaultColumn": "overview",
+        "screener_type": "crypto_mkt",
+        "displayCurrency": "BTC",
+        "colorTheme": "light",
+        "locale": "en"
+        }
+        </script>
     </div>
 </div>
+<!-- TradingView Widget END -->
 
-<script>
-    async function fetchCryptoPrices() {
-        // Fetching cryptocurrency prices from an API
-        const apiKey = 'your_api_key_here';
-        const apiUrl = `https://api.coinmarketcap.com/v1/cryptocurrency/listings/latest?CMC_PRO_API_KEY=${apiKey}`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <span>&copy; 2024 WealthWise Investment. All Rights Reserved.</span>
+    </div>
+</footer>
 
-        // Populate the carousel with data
-        const cryptoCarouselContent = document.getElementById('crypto-carousel-content');
-        data.data.forEach((crypto, index) => {
-            const isActive = index === 0 ? 'active' : '';
-            cryptoCarouselContent.innerHTML += `
-                <div class="carousel-item ${isActive}">
-                    <div class="dashboard-card">
-                        <h5>${crypto.name}</h5>
-                        <p>Price: ${crypto.quote.USD.price.toFixed(2)} USD</p>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    // Call the function to fetch and display prices
-    fetchCryptoPrices();
-</script>
-
-<!-- Bootstrap JS -->
+<!-- Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
