@@ -172,33 +172,110 @@
 <!-- Full-Width Image -->
 <img src="img\Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
 
-<!-- Dashboard Content -->
-<div class="container-dashboard">
-    <div class="row">
-        <!-- Example Card 1 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Total Balance</h5>
-                <p>$12,345.67</p>
-            </div>
-        </div>
-        <!-- Example Card 2 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Deposits</h5>
-                <p>$5,000.00</p>
-            </div>
-        </div>
-        <!-- Example Card 3 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Withdrawals</h5>
-                <p>$1,200.00</p>
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">History</h4>
+
+                        <!-- Form Section -->
+                        <div class="table-responsive">
+                            <form method="post" name="opts">
+                                <input type="hidden" name="form_id" value="17261775993564">
+                                <input type="hidden" name="form_token" value="82bdb88e886cb2987301d2a7e15f9a52">
+                                <input type="hidden" name="a" value="history">
+                                <input type="hidden" name="page" value="1">
+
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="transactionType" class="form-label">Transaction Type</label>
+                                        <select name="type" class="form-control" id="transactionType" onchange="document.opts.submit();">
+                                            <option value="">All transactions</option>
+                                            <option value="deposit">Deposit</option>
+                                            <option value="withdrawal">Withdrawal</option>
+                                            <option value="earning">Earning</option>
+                                            <option value="commissions">Referral commission</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="currencyType" class="form-label">eCurrency Type</label>
+                                        <select name="ec" class="form-control" id="currencyType">
+                                            <option value="-1">All eCurrencies</option>
+                                            <option value="1000">Bitcoin (BTC)</option>
+                                            <option value="1001">Ethereum (ETH)</option>
+                                            <option value="1002">USDT (TRC20)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">From Date:</label>
+                                        <div class="d-flex">
+                                            <select name="month_from" class="form-control me-2">
+                                                <!-- Month options -->
+                                            </select>
+                                            <select name="day_from" class="form-control me-2">
+                                                <!-- Day options -->
+                                            </select>
+                                            <select name="year_from" class="form-control">
+                                                <!-- Year options -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">To Date:</label>
+                                        <div class="d-flex">
+                                            <select name="month_to" class="form-control me-2">
+                                                <!-- Month options -->
+                                            </select>
+                                            <select name="day_to" class="form-control me-2">
+                                                <!-- Day options -->
+                                            </select>
+                                            <select name="year_to" class="form-control">
+                                                <!-- Year options -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <input type="submit" value="Go" class="btn btn-success">
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Transactions Table -->
+                        <div class="table-responsive mt-3">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th width="200">Amount</th>
+                                        <th width="170">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" class="text-center">No transactions found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination -->
+                            <ul class="pagination">
+                                <li class="page-item"><a class="prev page-link disabled">&lt;&lt;</a></li>
+                                <li class="page-item active"><a class="page-link">1</a></li>
+                                <li class="page-item"><a class="next page-link disabled">&gt;&gt;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 <!-- TradingView Widget -->
 <div class="col-md-6 offset-md-3">
     <div class="tradingview-widget-container">

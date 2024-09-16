@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>wealthwiseinvestment</title>
+    <title>WealthWise Investment</title>
     <link rel="icon" href="img\20240903_184039.png" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -16,17 +16,16 @@
 
         .navbar {
             background-color: #eceef0;
-            font-family: Verdana, sans-serif;
         }
 
         .navbar-brand img {
-            width: 170px; /* Adjusted logo size */
+            width: 170px;
             height: 100px;
         }
 
         .navbar-nav .nav-link {
             color: #181717;
-            font-size: 12px; /* Further reduced font size */
+            font-size: 12px;
         }
 
         .navbar-nav .nav-link:hover {
@@ -34,7 +33,7 @@
         }
 
         .navbar-toggler {
-            border-color: #ffffff; /* Optional: change the border color to match */
+            border-color: #ffffff;
         }
 
         .navbar-toggler-icon {
@@ -43,12 +42,11 @@
 
         .dropdown-menu {
             background-color: #eceef0;
-            font-family: Verdana, sans-serif;
         }
 
         .dropdown-item {
             color: #000000;
-            font-size: 12px; /* Reduced font size */
+            font-size: 12px;
         }
 
         .dropdown-item:hover {
@@ -58,11 +56,12 @@
 
         .header-image {
             width: 100%;
-            height: 150px; /* Adjusted height */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
+            height: 150px;
+            object-fit: cover;
             margin-bottom: 1.5rem;
         }
-        .dashboard-card {
+
+        .dashboard-card, .tradingview-widget-container {
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 1rem;
@@ -71,28 +70,44 @@
         }
 
         .card {
-            border: 1px solid #eceef0; /* Adjusted border thickness */
+            border: 1px solid #eceef0;
             border-radius: 0.5rem;
             box-shadow: rgb(199, 197, 216) 4px 8px 9px -2px;
-            display: flex;
         }
 
         .btn-long {
-            width: 100%; /* Makes the button take the full width */
+            width: 100%;
         }
 
         .form-control, .form-select {
-            font-size: 0.875rem; /* Smaller font size */
+            font-size: 0.875rem;
         }
-        /* TradingView Widget Styling */
+
+        .footer {
+            background-color: #eceef0;
+            padding: 1rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .footer span {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        h3.card-title {
+            font-size: 1.1rem; /* Larger size for prominence */
+        }
+
+          
         .tradingview-widget-container {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-            margin-top: 2rem; /* Add space from the form */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
             padding: 1rem;
             background-color: #ffffff;
             display: flex;
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
+            justify-content: center;
+            align-items: center;
         }
 
         @media (max-width: 768px) {
@@ -101,19 +116,9 @@
                 margin-top: 1rem;
             }
         }
-        .tradingview-widget-copyright{
+
+        .tradingview-widget-copyright {
             display: none !important;
-        }
-        .footer {
-            background-color: #eceef0;
-            padding: 1rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-        
-        .footer span {
-            color: #6c757d;
-            font-size: 0.875rem;
         }
 
     </style>
@@ -123,7 +128,6 @@
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <!-- Logo Section -->
         <a class="navbar-brand" href="#">
             <img src="img/20240903_184039.png" alt="Logo">
         </a>
@@ -149,7 +153,7 @@
                         <i class="fas fa-file-alt"></i> Transactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
-                        <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
+                        <li><a class="dropdown-item" href="?a=earnings">All Transactions</a></li>
                         <li><a class="dropdown-item" href="?a=deposit_history">Deposits</a></li>
                         <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
                     </ul>
@@ -159,9 +163,9 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="">My Profile</a></li>
-                        <li><a class="dropdown-item" href="">My Referral</a></li>
-                        <li><a class="dropdown-item" href="">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="?a=edit_account">My Profile</a></li>
+                        <li><a class="dropdown-item" href="?a=referrals">My Referral</a></li>
+                        <li><a class="dropdown-item" href="?a=logout">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -170,36 +174,57 @@
 </nav>
 
 <!-- Full-Width Image -->
-<img src="img\Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
+<img src="img/Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
 
-<!-- Dashboard Content -->
-<div class="container-dashboard">
+<div class="container mt-5">
     <div class="row">
-        <!-- Example Card 1 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Total Balance</h5>
-                <p>$12,345.67</p>
-            </div>
-        </div>
-        <!-- Example Card 2 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Deposits</h5>
-                <p>$5,000.00</p>
-            </div>
-        </div>
-        <!-- Example Card 3 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Withdrawals</h5>
-                <p>$1,200.00</p>
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Make Deposit</h3>
+                    <p class="card-description"><small>Fill the form below</small></p>
+                    <form method="post" name="spendform" class="forms-sample">
+                        <div class="mb-3">
+                            <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
+                            <select name="" class="form-select">
+                                <option value="">Choose Plan</option>
+                                <option value="1">Meta Trade Account</option>
+                                <option value="2">Stock Market Account</option>
+                                <option value="3">Real Estate Account</option>
+                                <option value="4">Contract Account</option>
+                                <option value="5">Retirement Account</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Enter Amount: <span class="tx-danger">*</span></label>
+                            <input type="text" name="amount" value="30.00" placeholder="10" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <p>Select Payment Option</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1000">
+                                <label class="form-check-label">Bitcoin (BTC)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1001">
+                                <label class="form-check-label">Ethereum (ETH)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1002">
+                                <label class="form-check-label">USDT (TRC20)</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success btn-long" type="submit">Make Deposit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- TradingView Widget -->
+  <!-- TradingView Widget -->
 <div class="col-md-6 offset-md-3">
     <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
@@ -218,13 +243,15 @@
     </div>
 </div>
 <!-- TradingView Widget END -->
+
 <!-- Footer -->
 <footer class="footer">
-    <span>© 2024 WealthWise Investment. All rights reserved.</span>
+    <div class="container">
+        <span>&copy; 2024 WealthWise Investment. All Rights Reserved.</span>
+    </div>
 </footer>
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
