@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>{% block title %} {% endblock %} - wealthwiseinvestment</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <style>
+      body {
+          background-color: #f4f4f4;
+      }
+      .container-scroller {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+      }
+      .auth-form-light {
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      .btn-primary {
+          background-color: #DAA520; /* Gold color */
+          border: none;
+      }
+      .btn-primary:hover {
+          background-color: #b8860b; /* Darker gold for hover effect */
+      }
+      .text-primary {
+          color: #DAA520 !important; /* Gold color for text links */
+      }
+      .brand-logo img {
+          width: 300px; /* Logo size */
+          display: block;
+          margin: 0 auto 20px;
+      }
+      h4, h6 {
+          color: #333; /* Dark color for headings */
+      }
+      .brand-logo img {
+          width: 120px; /* Adjust size as needed */
+          display: block;
+          margin: 0 auto 20px;
+      }
+      .header-image {
+          width: 100%;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          margin-bottom: 20px;
+      }
+</style>
+
+
+</head>
+<body>
+
+  {% block content %}
+  {% endblock %}
+  
+  <!-- Required JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+      function checkform() {
+          var username = document.mainform.username.value;
+          var password = document.mainform.password.value;
+
+          if (username == '') {
+              alert("Please type your username!");
+              document.mainform.username.focus();
+              return false;
+          }
+          if (password == '') {
+              alert("Please type your password!");
+              document.mainform.password.focus();
+              return false;
+          }
+          return true;
+      }
+  </script>
+</body>
+</html>
