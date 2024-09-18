@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "authentication",
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +114,13 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.CustomAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # Static files (CSS, JavaScript, Images)

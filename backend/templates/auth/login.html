@@ -17,9 +17,23 @@
                             <div class="brand-logo">
                                 <img src="{% static 'img/20240903_184039.png' %}" alt="logo">
                             </div>
-                            <h4>Hello!</h4>
+                            <div class="container">
+                            {% if messages %}
+                            <div class="alert alert-{{type}} alert-dismissible" role="alert">
+                                <div id="form_errors">
+                                    {% for message in messages %}
+                                    <strong> {{message}}</strong>
+                                    {% endfor %}
+                                </div>
+                                <button type="buttom" class="close" data-dismiss="alert" arial-label="Close">
+                                <span arial-hidden="true">&times</span>
+                                </button>
+                            </div>
+                            {% endif %}
+                            <h4>Welcome Back!</h4>
                             <h6 class="font-weight-light">Sign in to continue.</h6><br>
                             <form method="post" name="mainform" onsubmit="return checkform()">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Username*" type="text" name="username" required>
                                 </div>
