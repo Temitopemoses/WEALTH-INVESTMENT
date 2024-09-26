@@ -13,16 +13,18 @@ def login(request):
   if request.method == 'POST':
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-
+    print(username, password)
     user = auth.authenticate(username=username, password=password)
         
     if user is not None:
+        print(username, password)
         auth.login(request, user)
         print('logged in')
         return redirect('dashboard')
     
     else:
         print('not logged in')
+        print(username, password)
         messages.error(request, 'Incorrect Username or Password')
         type = 'danger'
         context = {"type": type}

@@ -134,13 +134,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="sss.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="deposit.html"><i class="fas fa-upload"></i> Deposit</a>
+                    <a class="nav-link" href="{% url 'deposit' %}"><i class="fas fa-upload"></i> Deposit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
+                    <a class="nav-link" href="{% url 'withdraw' %}"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="?a=internal_transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
@@ -150,7 +150,7 @@
                         <i class="fas fa-file-alt"></i> Transactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
-                        <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url 'transaction' %}">All Transactions</a></li>
                         <li><a class="dropdown-item" href="?a=deposit_history">Deposits</a></li>
                         <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
                     </ul>
@@ -160,9 +160,10 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                        <li><a class="dropdown-item" href="#">Welcome Back, {{request.user.username}}!</a></li>
                         <li><a class="dropdown-item" href="">My Profile</a></li>
                         <li><a class="dropdown-item" href="">My Referral</a></li>
-                        <li><a class="dropdown-item" href="">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>

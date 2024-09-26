@@ -3,11 +3,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from django.utils import timezone
 
 # Import custom user manager and JWT token generation
 from .managers import CustomUserManager
+
+# User = get_user_model()
 
 # Define the User model with custom fields and methods
 class User(AbstractBaseUser, PermissionsMixin):
@@ -43,3 +46,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+# class Account(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     total_balance = models.CharField(max_length=100000000)
+#     recent_deposit = models.CharField(max_length=10000000)
+#     date_created = models.DateTimeField(auto_now_add=True)
