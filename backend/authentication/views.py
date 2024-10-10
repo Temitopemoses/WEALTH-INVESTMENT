@@ -1,36 +1,43 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import update_last_login
 from django.contrib import auth
-from django.contrib.auth import logout
 from django.contrib import messages
+from django.views import View
 
 User = get_user_model()
 
 # Create your views here.
 
-def login(request):
+class LoginView(View):
 
-  if request.method == 'POST':
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    print(username, password)
-    user = auth.authenticate(username=username, password=password)
-        
-    if user is not None:
-        print(username, password)
-        auth.login(request, user)
-        print('logged in')
-        return redirect('dashboard')
-    
-    else:
-        print('not logged in')
-        print(username, password)
-        messages.error(request, 'Incorrect Username or Password')
-        type = 'danger'
-        context = {"type": type}
-        return render(request, 'auth/login.html', context)
-    
-  return render(request, 'auth/login.html')
+  def get(self, request):
+    return render(request, 'auth/login.html')
+  
+  def post(self, request):
+      
+      username = request.POST.get('username', '')
+      password = request.POST.get('password', '')
+      # print(username, password)
+      user = authenticate(request, username=username, password=password)
+      
+      print(user)
+      if user is not None:
+          # print(username, password)
+          login(request, user)
+          print('logged in')
+          return redirect('dashboard')
+      
+      else:
+          print('not logged in')
+          print(username, password)
+          messages.error(request, 'Incorrect Username or Password')
+          type = 'danger'
+          context = {"type": type}
+          return render(request, 'auth/login.html', context)
+      
 
 def signup(request):
 
@@ -64,7 +71,14 @@ def signup(request):
           password=password, first_name=first_name, 
           last_name=last_name, secret_question=secret_question, 
           secret_question_answer=secret_question_answer)
+        
+        user.is_active = True
         user.save()
+      
+        # Use the backend parameter when logging in
+        login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
+
+        update_last_login(None, user)
         return redirect("dashboard")
     
     else:
@@ -77,6 +91,6 @@ def signup(request):
 
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect("login")
+def Logout(request):
+  logout(request)
+  return redirect('login')  # Redirect after logout

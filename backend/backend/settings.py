@@ -116,6 +116,7 @@ USE_I18N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = "users.User"
+LOGIN_URL = '/auth/login/'
 
 AUTHENTICATION_BACKENDS = [
     'authentication.backends.CustomAuthenticationBackend',
