@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User
+from .models import User, Cryptocurrency, Transaction, Wallet
 
 # class CustomAdminSite(AdminSite):
 #     # login_form = CustomAdminAuthenticationForm
@@ -26,3 +26,6 @@ from .models import User
 
 # custom_admin_site = CustomAdminSite(name='custom_admin')
 admin.site.register(User)
+admin.site.register(Cryptocurrency)
+admin.site.register(Transaction)
+admin.site.register(Wallet)

@@ -49,8 +49,41 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
-# class Account(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     total_balance = models.CharField(max_length=100000000)
-#     recent_deposit = models.CharField(max_length=10000000)
-#     date_created = models.DateTimeField(auto_now_add=True)
+class Cryptocurrency(models.Model):
+    name = models.CharField(max_length=100)  # e.g., Bitcoin, Ethereum
+    symbol = models.CharField(max_length=10)  # e.g., BTC, ETH
+    price_usd = models.DecimalField(max_digits=20, decimal_places=8, default=0.0)  # Store real-time price in USD
+    last_updated = models.DateTimeField(auto_now=True)
+
+
+class Wallet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=20, decimal_places=8, default=0.0)  # Balance in respective crypto
+
+
+
+class Transaction(models.Model):
+    DEPOSIT = 'D'
+    WITHDRAWAL = 'W'
+    TRANSACTION_TYPES = [
+        (DEPOSIT, 'Deposit'),
+        (WITHDRAWAL, 'Withdrawal'),
+    ]
+    
+    PENDING = 'pending'
+    SUCCESS = 'success'
+    FAILED = 'failed'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (SUCCESS, 'Success'),
+        (FAILED, 'Failed'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)  # 'BTC' or 'USDT'
+    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPES)
+    amount = models.DecimalField(max_digits=20, decimal_places=8)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    payment_id = models.CharField(max_length=100, null=True, blank=True)  # Store payment provider's ID

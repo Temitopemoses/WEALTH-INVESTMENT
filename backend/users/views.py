@@ -3,13 +3,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 from django.conf import settings
+
+from .models import Cryptocurrency, Wallet, Transaction
 # Create your views here.
 
 User = get_user_model()
 
 @login_required(redirect_field_name='next', login_url='/auth/login/')
 def dashboard(request):
-  return render(request, 'dashboard.html')
+  user = request.user
+  wallet = Wallet.objects.get(user=user)
+  print(f"User acct balance ${wallet.balance}")
+  context = {wallet: "wallet"}
+  return render(request, 'dashboard.html', context)
 
 # @login_required(redirect_field_name='next', login_url='/auth/login/')
 def deposit(request):
