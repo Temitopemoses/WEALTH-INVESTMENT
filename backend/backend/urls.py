@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # URL path for authorization and authentication
-    path('auth/', include('authentication.urls')),
+    path('', include('authentication.urls')),
     
     # URL path for dashboard activities and authentication
     path('user/', include('users.urls')),

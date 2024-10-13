@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home - {% endblock title %}
+{% block content %}
+
+<div class="hero-section">
+  <h1>Your Trusted Partner in Investments</h1>
+  <p style="color: #ffffff;">We help you grow and secure your wealth with strategic and reliable investment plans.</p>
+  <a href="{% url "signup" %}" class="cta-btn">Get Started</a>
+</div>
+
+<section class="features">
+  <div class="feature">
+    <img src="{% static 'img/secure.jpg' %}" alt="Secure Investment">
+    <h2>Secure Investments</h2>
+    <p>Our plans are designed to provide maximum security for your investments.</p>
+  </div>
+  <div class="feature">
+    <img src="{% static 'img/highreturn.jpg' %}" alt="High Returns">
+    <h2>High Returns</h2>
+    <p>We ensure your wealth grows with competitive rates and expert strategies.</p>
+  </div>
+  <div class="feature">
+    <img src="{% static 'img/expert.avif' %}" alt="Expert Advisors">
+    <h2>Expert Advisors</h2>
+    <p>Work with professionals who understand market trends and risks.</p>
+  </div>
+</section>
+
+<div class="tradingview-widget-container" style="width: 100%; height: 74px;">
+
+    <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22BTC%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22ETH%2FUSD%22%7D%2C%7B%22description%22%3A%22USDT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDTUSD%22%7D%2C%7B%22description%22%3A%22XRP%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXRPUSD%22%7D%2C%7B%22description%22%3A%22BCH%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ABCHUSD%22%7D%2C%7B%22description%22%3A%22BNB%2FUSD%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22DOT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ADOTUSD%22%7D%2C%7B%22description%22%3A%22LINK%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALINKUSD%22%7D%2C%7B%22description%22%3A%22BSV%2FUSD%22%2C%22proName%22%3A%22BITBAY%3ABSVUSD%22%7D%2C%7B%22description%22%3A%22CRO%2FUSD%22%2C%22proName%22%3A%22BITTREX%3ACROUSD%22%7D%2C%7B%22description%22%3A%22ADAUSD%22%2C%22proName%22%3A%22KRAKEN%3AADAUSD%22%7D%2C%7B%22description%22%3A%22LTC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22USDC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDCUSD%22%7D%2C%7B%22description%22%3A%22TRX%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ATRXUSD%22%7D%2C%7B%22description%22%3A%22XMR%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXMRUSD%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22compact%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A74%2C%22utm_source%22%3A%22mybridgetrustinvests.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%2C%22page-uri%22%3A%22mybridgetrustinvests.com%2F%22%7D" title="ticker tape TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 74px; width: 100%;"></iframe>
+
+    
+
+  <style>
+.tradingview-widget-copyright {
+font-size: 13px !important;
+line-height: 32px !important;
+text-align: center !important;
+vertical-align: middle !important;
+/* @mixin sf-pro-display-font; */
+font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright .blue-text {
+color: #2962FF !important;
+}
+
+.tradingview-widget-copyright a {
+text-decoration: none !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:visited {
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:hover .blue-text {
+color: #1E53E5 !important;
+}
+
+.tradingview-widget-copyright a:active .blue-text {
+color: #1848CC !important;
+}
+
+.tradingview-widget-copyright a:visited .blue-text {
+color: #2962FF !important;
+}
+</style></div>
+</div>
+
+<section class="investment-notes">
+  <h2>Investment Notes</h2>
+  <p>At Wealth Wise Investment, we prioritize transparency and accountability in all our investment operations. Our strategies focus on providing sustainable returns while ensuring the security of your capital.</p>
+  <ul>
+    <li>Our experts continuously monitor market conditions to adapt our strategies to current trends.</li>
+    <li>We provide monthly reports on your investment portfolio, ensuring full transparency.</li>
+    <li>We offer customized plans tailored to your financial goals.</li>
+  </ul>
+</section>
+
+
+<section class="plans">
+  <h2>Our Plans</h2>
+  <div class="plan">
+    <img src="{% static 'img/basic-plan.jpg'%}" alt="Basic Plan">
+    <h3>Basic Plan</h3>
+    <p>Investment: $1,000 - $10,000</p>
+    <p>Returns: 5% per annum</p>
+  </div>
+  <div class="plan">
+    <img src="{% static 'img/premium-plan.jpg'%}" alt="Premium Plan">
+    <h3>Premium Plan</h3>
+    <p>Investment: $10,000 - $100,000</p>
+    <p>Returns: 8% per annum</p>
+  </div>
+  <div class="plan">
+    <img src="{% static 'img/elite-plan.avif' %}" alt="Elite Plan">
+    <h3>Elite Plan</h3>
+    <p>Investment: $100,000+</p>
+    <p>Returns: 12% per annum</p>
+  </div>
+</section>
+
+
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <h4>How safe is my investment?</h4>
+    <p>We employ stringent risk management strategies to ensure your capital is as safe as possible, with a focus on long-term, sustainable growth.</p>
+  </div>
+  <div class="faq-item">
+    <h4>What are the withdrawal options?</h4>
+    <p>Withdrawals can be made quarterly without any penalties. Full withdrawal options are available after a minimum holding period of 12 months.</p>
+  </div>
+  <div class="faq-item">
+    <h4>How can I get started?</h4>
+    <p>You can start by signing up and choosing a plan that aligns with your financial goals. Our support team is available to guide you through the process.</p>
+  </div>
+</section>
+
+<section class="stats">
+  <h2>Our Achievements</h2>
+  <div class="stats-container">
+    <div class="stat">
+      <h3>50,000+</h3>
+      <p>Happy Users</p>
+    </div>
+    <div class="stat">
+      <h3>$5 Million+</h3>
+      <p>Total Investments</p>
+    </div>
+    <div class="stat">
+      <h3>$20 Million+</h3>
+      <p>Withdrawals Processed</p>
+    </div>
+  </div>
+</section>
+
+
+<div id="popup-notification" class="popup hidden">
+  <p id="popup-message"></p>
+</div>
+
+<div class="container mt-3 bg-light" >
+  
+      <div class="row">
+      <!-- About us end-->
+
+      <div class="col-lg-12 footer-widget">
+          <h3 class="widget-title">RISK DISCLAIMER</h3>
+          <div class="newsletter-introtext">
+
+              Nothing contained in this website should be construed as a solicitation or offer, or recommendation, to
+              acquire or dispose of any investment or to engage in any other transaction. The information provided herein
+              is not intended for distribution to, or use by, any person or entity in any jurisdiction or country where
+              such distribution or use would be contrary to law or regulation. Some services may not be available to
+              certain investors due to regulatory or other constraints either in New Zealand, the United States or elsewhere.
+              It is advised that most services are only available following completion of the Customer Agreement and/or any
+              other relevant documentation as required. Investments in securities or financial instruments (including digital
+              currencies, futures, options, contracts for differences, spot and forward foreign exchange contracts) can fluctuate
+              in value. Accordingly, you should be aware that you might not realise the initial amount invested and indeed may
+              incur additional liabilities as investments in securities or financial instruments may entail above average risk.
+              You must therefore carefully consider whether your financial circumstances permit you to invest.
+              mybridgetrustinvests.com strongly suggests that you seek the advice of an independent financial advisor in this regard.
+          </div>
+
+      </div>
+  </div>
+
+
+  <div class="row">
+      <!-- About us end-->
+
+      <div class="col-lg-12 footer-widget">
+          <img src="{% static 'img/tfc-icon.png' %}" alt="">
+          <div class="newsletter-introtext"><br>
+              mybridgetrustinvests.com is a member of The Financial Commission, an international organization engaged in
+              the resolution of disputes within the financial services industry in the Forex market.
+          </div>
+
+      </div>
+      <div class="col-lg-12 footer-widget">
+          <img src="{% static 'sec-logo.png' %}" alt=""><br>
+          <div class="newsletter-introtext"><br>
+              mywealthwiseinvest.com is regulated by the US Securities and Exchange Commission. The mission of the SEC is to protect
+              investors; maintain fair,
+              orderly, and efficient markets; and facilitate capital formation.
+
+              mywealthwiseinvest.com is an investment company that . Direct access to over 50 financial markets
+              through one account. Any information contained on this website is provided to you for informational
+              purposes only and should not be regarded as an offer or solicitation of an offer to buy or sell any
+              investments or related services that may be referenced here. Investing in certain instruments,
+              including stocks, options, futures, foreign currencies, and bonds involve a high level of risk.
+              Trading on margin comes with substantial risk as well. You must be aware of these risks before
+              opening an account to trade. The income you may get from online investing may go down as well
+              as up.
+
+
+              mywealthwiseinvest.com is a registered investment dealer, a member of the
+              United States Securities and Exchange Commission (SEC), the Investment Industry Regulatory Organization of Canada
+              (IIROC) and a member of the Canadian Investor Protection Fund (CIPF), the benefits of which are limited to the
+              activities undertaken by mywealthwiseinvest.com.
+
+
+          </div>
+
+      </div>
+  </div>
+
+
+
+
+{% endblock content %}
+  

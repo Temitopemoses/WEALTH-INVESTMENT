@@ -1,15 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>WealthWise Investment</title>
-    <link rel="icon" href="{% static 'img\20240903_184039.png' %}" type="image/jpg">
+    <title>wealthwiseinvestment</title>
+    <link rel="icon" href="img\20240903_184039.png" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
     <style>
         body {
             font-family: Verdana, sans-serif;
@@ -127,7 +125,7 @@
     <div class="container">
         <!-- Logo Section -->
         <a class="navbar-brand" href="#">
-            <img src="{% static 'img/20240903_184039.png' %}" alt="Logo">
+            <img src="img/20240903_184039.png" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -135,7 +133,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="sss.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="deposit.html"><i class="fas fa-upload"></i> Deposit</a>
@@ -144,7 +142,7 @@
                     <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=internal_transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a class="nav-link" href="transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transactionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -152,8 +150,8 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
                         <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
-                        <li><a class="dropdown-item" href="?a=deposit_history">Deposits</a></li>
-                        <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
+                        <li><a class="dropdown-item" href="transaction.html">Deposits</a></li>
+                        <li><a class="dropdown-item" href="transaction.html">Withdrawals</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -161,9 +159,9 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="">My Profile</a></li>
-                        <li><a class="dropdown-item" href="">My Referral</a></li>
-                        <li><a class="dropdown-item" href="">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
+                        <li><a class="dropdown-item" href="refferal.html">My Referral</a></li>
+                        <li><a class="dropdown-item" href="Signup.html">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -172,7 +170,7 @@
 </nav>
 
 <!-- Full-Width Image -->
-<img src="{% static 'img\Stock market or forex trading graph in futuristic concept.jpeg' %}" alt="Dashboard Header" class="header-image">
+<img src="img\Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
 
     <!-- Main Content -->
     <div class="container mt-4">
@@ -279,22 +277,48 @@
         </div>
     </div>
 <!-- TradingView Widget -->
-<div class="col-md-6 offset-md-3">
-    <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-        {
-        "width": "100%",
-        "height": "490",
-        "defaultColumn": "overview",
-        "screener_type": "crypto_mkt",
-        "displayCurrency": "BTC",
-        "colorTheme": "light",
-        "locale": "en"
-        }
-        </script>
-    </div>
+<div class="tradingview-widget-container" style="width: 100%; height: 74px;">
+
+    <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22BTC%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22ETH%2FUSD%22%7D%2C%7B%22description%22%3A%22USDT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDTUSD%22%7D%2C%7B%22description%22%3A%22XRP%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXRPUSD%22%7D%2C%7B%22description%22%3A%22BCH%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ABCHUSD%22%7D%2C%7B%22description%22%3A%22BNB%2FUSD%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22DOT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ADOTUSD%22%7D%2C%7B%22description%22%3A%22LINK%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALINKUSD%22%7D%2C%7B%22description%22%3A%22BSV%2FUSD%22%2C%22proName%22%3A%22BITBAY%3ABSVUSD%22%7D%2C%7B%22description%22%3A%22CRO%2FUSD%22%2C%22proName%22%3A%22BITTREX%3ACROUSD%22%7D%2C%7B%22description%22%3A%22ADAUSD%22%2C%22proName%22%3A%22KRAKEN%3AADAUSD%22%7D%2C%7B%22description%22%3A%22LTC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22USDC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDCUSD%22%7D%2C%7B%22description%22%3A%22TRX%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ATRXUSD%22%7D%2C%7B%22description%22%3A%22XMR%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXMRUSD%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22compact%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A74%2C%22utm_source%22%3A%22mybridgetrustinvests.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%2C%22page-uri%22%3A%22mybridgetrustinvests.com%2F%22%7D" title="ticker tape TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 74px; width: 100%;"></iframe>
+
+    
+
+  <style>
+.tradingview-widget-copyright {
+font-size: 13px !important;
+line-height: 32px !important;
+text-align: center !important;
+vertical-align: middle !important;
+/* @mixin sf-pro-display-font; */
+font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright .blue-text {
+color: #2962FF !important;
+}
+
+.tradingview-widget-copyright a {
+text-decoration: none !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:visited {
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:hover .blue-text {
+color: #1E53E5 !important;
+}
+
+.tradingview-widget-copyright a:active .blue-text {
+color: #1848CC !important;
+}
+
+.tradingview-widget-copyright a:visited .blue-text {
+color: #2962FF !important;
+}
+</style></div>
 </div>
 <!-- TradingView Widget END -->
 <!-- Footer -->

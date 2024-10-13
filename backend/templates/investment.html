@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Investment Plans - {% endblock title %}
+
+{% block content %}
+
+
+<section id="investment-top" class="investment-top">
+  <div class="overlay"></div>
+  <div class="investment-content">
+    <h1>Investment Plans</h1>
+    <p>Secure and profitable investment options tailored to your needs.</p>
+  </div>
+</section>
+
+<section id="investment-plans" class="investment-plans">
+  <h2>Choose Your Investment Plan</h2>
+  <div class="plans-container">
+
+
+    <div class="plan-card">
+      <h3>Basic Plan</h3>
+      <p>Minimum Investment: $100</p>
+      <p>Returns: 5% Monthly</p>
+      <p>Duration: 6 Months</p>
+      <a href="{% url "signup" %}">  <button class="btn-invest">Invest Now</button></a>
+    
+    </div>
+
+    <div class="plan-card">
+      <h3>Premium Plan</h3>
+      <p>Minimum Investment: $500</p>
+      <p>Returns: 10% Monthly</p>
+      <p>Duration: 12 Months</p>
+      <a href="{% url "signup" %}">  <button class="btn-invest">Invest Now</button></a>
+    
+    </div>
+
+   
+    <div class="plan-card">
+      <h3>Gold Plan</h3>
+      <p>Minimum Investment: $1000</p>
+      <p>Returns: 15% Monthly</p>
+      <p>Duration: 12 Months</p>
+      <a href="{% url "signup" %}">  <button class="btn-invest">Invest Now</button></a>
+    
+    </div>
+
+  </div>
+</section>
+
+<section id="live-stats" class="live-stats">
+  <h2>Our Achievements</h2>
+  <div class="stats-container">
+    <div class="stat-item">
+      <h3>10,000+</h3>
+      <p>Active Investors</p>
+    </div>
+    <div class="stat-item">
+      <h3>$5M+</h3>
+      <p>Total Investments</p>
+    </div>
+    <div class="stat-item">
+      <h3>50,000+</h3>
+      <p>Total Withdrawals</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="faq" class="faq">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-container">
+    <div class="faq-item">
+      <h4>What is the minimum investment amount?</h4>
+      <p>The minimum investment amount is $100 for the Basic Plan.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How long is the investment duration?</h4>
+      <p>The duration depends on the plan. It ranges from 6 months to 12 months.</p>
+    </div>
+    <div class="faq-item">
+      <h4>How are returns paid?</h4>
+      <p>Returns are paid directly to your registered account at the end of each month.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I withdraw my investment before the duration ends?</h4>
+      <p>Early withdrawal is allowed, but it may come with a penalty fee depending on the plan.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container mt-3 bg-light">
+  
+  <div class="row">
+  <!-- About us end-->
+
+  <div class="col-lg-12 footer-widget">
+      <h3 class="widget-title">RISK DISCLAIMER</h3>
+      <div class="newsletter-introtext">
+
+          Nothing contained in this website should be construed as a solicitation or offer, or recommendation, to
+          acquire or dispose of any investment or to engage in any other transaction. The information provided herein
+          is not intended for distribution to, or use by, any person or entity in any jurisdiction or country where
+          such distribution or use would be contrary to law or regulation. Some services may not be available to
+          certain investors due to regulatory or other constraints either in New Zealand, the United States or elsewhere.
+          It is advised that most services are only available following completion of the Customer Agreement and/or any
+          other relevant documentation as required. Investments in securities or financial instruments (including digital
+          currencies, futures, options, contracts for differences, spot and forward foreign exchange contracts) can fluctuate
+          in value. Accordingly, you should be aware that you might not realise the initial amount invested and indeed may
+          incur additional liabilities as investments in securities or financial instruments may entail above average risk.
+          You must therefore carefully consider whether your financial circumstances permit you to invest.
+          mybridgetrustinvests.com strongly suggests that you seek the advice of an independent financial advisor in this regard.
+      </div>
+
+  </div>
+</div>
+
+
+<div class="row">
+  <!-- About us end-->
+
+  <div class="col-lg-12 footer-widget">
+      <img src="{% static 'tfc-icon.png' %}" alt="">
+      <div class="newsletter-introtext"><br>
+          mywealthwiseinvest.com is a member of The Financial Commission, an international organization engaged in
+          the resolution of disputes within the financial services industry in the Forex market.
+      </div>
+
+  </div>
+  <div class="col-lg-12 footer-widget">
+      <img src="{% static 'sec-logo.png' %}" alt=""><br>
+      <div class="newsletter-introtext"><br>
+          mywealthwiseinvest.com is regulated by the US Securities and Exchange Commission. The mission of the SEC is to protect
+          investors; maintain fair,
+          orderly, and efficient markets; and facilitate capital formation.
+
+          mywealthwiseinvest.com is an investment company that . Direct access to over 50 financial markets
+          through one account. Any information contained on this website is provided to you for informational
+          purposes only and should not be regarded as an offer or solicitation of an offer to buy or sell any
+          investments or related services that may be referenced here. Investing in certain instruments,
+          including stocks, options, futures, foreign currencies, and bonds involve a high level of risk.
+          Trading on margin comes with substantial risk as well. You must be aware of these risks before
+          opening an account to trade. The income you may get from online investing may go down as well
+          as up.
+
+
+          mywealthwiseinvest.com is a registered investment dealer, a member of the
+          United States Securities and Exchange Commission (SEC), the Investment Industry Regulatory Organization of Canada
+          (IIROC) and a member of the Canadian Investor Protection Fund (CIPF), the benefits of which are limited to the
+          activities undertaken by mywealthwiseinvest.com.
+
+
+      </div>
+
+  </div>
+</div>
+
+
+
+{% endblock content %}

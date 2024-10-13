@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> {% block title %}{% endblock title %} Wealth Wise Investments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "styles1.css" %}">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="icon" href="{% static "img/logo.png" %}" type="image/png">
+  <script defer src="{% static "scripts.js" %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="{% static "img/logo.png" %}" class="logori" alt="Logo">
+            </a>
+
+            <!-- Navbar toggler (hamburger icon) for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+             <div class="navbar-nav">    
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
+                <a class="nav-link {% if request.path == '/about-us/' %}active{% endif %}" href="{% url 'about' %}">About</a>
+                <a class="nav-link {% if request.path == '/investments-plans/' %}active{% endif %}" href="{% url 'investment' %}">Investment</a>
+                <a class="nav-link {% if request.path == '/support/' %}active{% endif %}" href="{% url 'support' %}">Support</a>
+                <a class="nav-link {% if request.path == '/policy/' %}active{% endif %}" href="{% url 'policy' %}">Policy</a>
+                   <!-- Custom styled Login and Sign Up buttons -->
+                <div class="d-flex ">
+                    <a href="{% url "login" %}" class="btn btn-outline-gold me-2">Login</a>
+                    <a href="{% url "signup" %}" class="btn btn-outline-custom">Sign Up</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% block content %}
+
+{% endblock content %}
+    <!-- Content row end-->
+</div>
+<footer class="bg-dark text-white pt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <h4 style=" color: #daa520;">About us</h4>
+        <p>We are a global investment firm committed to helping our clients grow their wealth with secure and sustainable investment strategies.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h4 style=" color: #daa520;">Support</h4>
+        <ul class="list-unstyled">
+          <li><a href="{% url "support" %}" class="text-white text-decoration-none">Contact Us</a></li>
+          <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Help Center</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h4 style=" color: #daa520;">Policy</h4>
+        <ul class="list-unstyled">
+          <li><a href="{% url "policy" %}" class="text-white text-decoration-none">Privacy Policy</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Terms of Service</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Refund Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h4 style=" color: #daa520;">Legal</h4>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white text-decoration-none">Disclaimers</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Risk Disclosure</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Legal Notices</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center py-3 border-top">
+      <p>&copy; 2024 WealthwiseInvestment Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+  <!-- Bootstrap JS, Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

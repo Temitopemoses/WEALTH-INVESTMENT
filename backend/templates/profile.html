@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>WealthWise Investment</title>
+    <title>User Profile - WealthWise Investment</title>
     <link rel="icon" href="img\20240903_184039.png" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -42,11 +42,12 @@
 
         .dropdown-menu {
             background-color: #eceef0;
+            font-family: Verdana, sans-serif;
         }
 
         .dropdown-item {
             color: #000000;
-            font-size: 12px;
+            font-size: 12px; /* Reduced font size */
         }
 
         .dropdown-item:hover {
@@ -54,33 +55,54 @@
             color: #ffd700;
         }
 
-        .header-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-        }
 
-        .dashboard-card, .tradingview-widget-container {
-            background-color: #ffffff;
+        .profile-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #fff;
+            border-radius: 0.5rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            border-radius: 0.5rem;
+        }
+
+        .profile-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .profile-header h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header p {
+            color: #6c757d;
+        }
+
+        .form-control:disabled, .form-select:disabled {
+            background-color: #e9ecef;
+        }
+
+        .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .card {
-            border: 1px solid #eceef0;
-            border-radius: 0.5rem;
-            box-shadow: rgb(199, 197, 216) 4px 8px 9px -2px;
+        .tradingview-widget-container {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn-long {
-            width: 100%;
-        }
-
-        .form-control, .form-select {
-            font-size: 0.875rem;
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+            .tradingview-widget-container {
+                padding: 0.5rem;
+                margin-top: 1rem;
+            }
         }
 
         .footer {
@@ -94,42 +116,11 @@
             color: #6c757d;
             font-size: 0.875rem;
         }
-
-        h3.card-title {
-            font-size: 1.1rem; /* Larger size for prominence */
-        }
-
-          
-       .tradingview-widget-container {
-    width: 100vw; /* Full viewport width */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-    padding: 0; /* Remove padding */
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure nothing overflows */
-}
-
-.tradingview-widget-container iframe {
-    width: 100%; /* Ensure the iframe takes full width */
-    height: 74px;
-    border: none; /* Remove any borders */
-}
-
-@media (max-width: 768px) {
-    .tradingview-widget-container {
-        padding: 0; /* Ensure no padding on smaller screens */
-        margin-top: 1rem;
-    }
-}
-
     </style>
 </head>
 <body>
 
-<!-- Top Navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -150,7 +141,7 @@
                     <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=internal_transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a class="nav-link" href="transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transactionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -159,7 +150,7 @@
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
                         <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
                         <li><a class="dropdown-item" href="transaction.html">Deposits</a></li>
-                        <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
+                        <li><a class="dropdown-item" href="transaction.html">Withdrawals</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -169,7 +160,7 @@
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                         <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
                         <li><a class="dropdown-item" href="refferal.html">My Referral</a></li>
-                        <li><a class="dropdown-item" href="Signup.html">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="index.html">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -177,59 +168,75 @@
     </div>
 </nav>
 
-<!-- Full-Width Image -->
-<img src="img/Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
-
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Make Deposit</h3>
-                    <p class="card-description"><small>Fill the form below</small></p>
-                    <form method="post" name="spendform" class="forms-sample">
-                        <div class="mb-3">
-                            <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
-                            <select name="" class="form-select">
-                                <option value="">Choose Plan</option>
-                                <option value="1">Meta Trade Account</option>
-                                <option value="2">Stock Market Account</option>
-                                <option value="3">Real Estate Account</option>
-                                <option value="4">Contract Account</option>
-                                <option value="5">Retirement Account</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Enter Amount: <span class="tx-danger">*</span></label>
-                            <input type="text" name="amount" value="30.00" placeholder="10" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <p>Select Payment Option</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" value="process_1000">
-                                <label class="form-check-label">Bitcoin (BTC)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" value="process_1001">
-                                <label class="form-check-label">Ethereum (ETH)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" value="process_1002">
-                                <label class="form-check-label">USDT (TRC20)</label>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-success btn-long" type="submit">Make Deposit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- Profile Container -->
+<div class="container profile-container">
+    <div class="profile-header">
+        <h3>User Profile</h3>
+        <p>Manage your personal details</p>
     </div>
 
-  <!-- TradingView Widget -->
-  <div class="tradingview-widget-container" style="width: 100%; height: 74px;">
+    <form>
+        <!-- Name (Disabled) -->
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" value="John Doe" disabled>
+            </div>
+        </div>
+
+        <!-- Email (Editable) -->
+        <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" value="john.doe@example.com">
+            </div>
+        </div>
+
+        <!-- Registration Date (Disabled) -->
+        <div class="form-group row">
+            <label for="reg-date" class="col-sm-3 col-form-label">Registration Date</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="reg-date" value="2023-01-15" disabled>
+            </div>
+        </div>
+
+        <!-- Bitcoin Address (Editable) -->
+        <div class="form-group row">
+            <label for="btc-address" class="col-sm-3 col-form-label">Bitcoin Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="btc-address" value="1FzWLkYX9hnPjUwwgM8c1yzWEwF2ySABC">
+            </div>
+        </div>
+
+        <!-- TRC20 Address (Editable) -->
+        <div class="form-group row">
+            <label for="trc-address" class="col-sm-3 col-form-label">TRC20 Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="trc-address" value="TX6ZZ2MA9fn8qfpqXH5QeTRJ7hHABC">
+            </div>
+        </div>
+
+        <!-- Ethereum Address (Editable) -->
+        <div class="form-group row">
+            <label for="eth-address" class="col-sm-3 col-form-label">Ethereum Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="eth-address" value="0x1234abcd5678efghijkl">
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- TradingView Widget -->
+
+
+<div class="tradingview-widget-container" style="width: 100%; height: 74px;">
 
     <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22BTC%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22ETH%2FUSD%22%7D%2C%7B%22description%22%3A%22USDT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDTUSD%22%7D%2C%7B%22description%22%3A%22XRP%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXRPUSD%22%7D%2C%7B%22description%22%3A%22BCH%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ABCHUSD%22%7D%2C%7B%22description%22%3A%22BNB%2FUSD%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22DOT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ADOTUSD%22%7D%2C%7B%22description%22%3A%22LINK%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALINKUSD%22%7D%2C%7B%22description%22%3A%22BSV%2FUSD%22%2C%22proName%22%3A%22BITBAY%3ABSVUSD%22%7D%2C%7B%22description%22%3A%22CRO%2FUSD%22%2C%22proName%22%3A%22BITTREX%3ACROUSD%22%7D%2C%7B%22description%22%3A%22ADAUSD%22%2C%22proName%22%3A%22KRAKEN%3AADAUSD%22%7D%2C%7B%22description%22%3A%22LTC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22USDC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDCUSD%22%7D%2C%7B%22description%22%3A%22TRX%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ATRXUSD%22%7D%2C%7B%22description%22%3A%22XMR%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXMRUSD%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22compact%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A74%2C%22utm_source%22%3A%22mybridgetrustinvests.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%2C%22page-uri%22%3A%22mybridgetrustinvests.com%2F%22%7D" title="ticker tape TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 74px; width: 100%;"></iframe>
 
@@ -271,17 +278,17 @@ color: #1848CC !important;
 color: #2962FF !important;
 }
 </style></div>
-</div>
+
 <!-- TradingView Widget END -->
 
 <!-- Footer -->
 <footer class="footer">
-    <div class="container">
-        <span>&copy; 2024 WealthWise Investment. All Rights Reserved.</span>
-    </div>
+    <span>© 2024 WealthWise Investment. All rights reserved.</span>
 </footer>
 
-<!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

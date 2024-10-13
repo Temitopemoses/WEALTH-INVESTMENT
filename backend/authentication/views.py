@@ -11,6 +11,27 @@ User = get_user_model()
 
 # Create your views here.
 
+class Homepage(View):
+  def get(self, request):
+    return render(request, 'index.html')
+  
+
+class About(View):
+  def get(self, request):
+    return render(request, 'about.html')
+  
+class Investment(View):
+  def get(self, request):
+    return render(request, 'investment.html')
+  
+class Policy(View):
+  def get(self, request):
+    return render(request, 'policy.html')
+  
+class Support(View):
+  def get(self, request):
+    return render(request, 'support.html')
+
 class LoginView(View):
 
   def get(self, request):
