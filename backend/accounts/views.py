@@ -10,7 +10,7 @@ from .models import Cryptocurrency, Wallet, Transaction
 User = get_user_model()
 # Wallet = Wallet.objects.get()
 
-@login_required(redirect_field_name='next', login_url='/auth/login/')
+@login_required(redirect_field_name='next', login_url='/authUser/login/')
 def dashboard(request):
   user = request.user
   wallet = Wallet.objects.get(user=user)

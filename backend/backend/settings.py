@@ -125,6 +125,19 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+# Celery configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# Celery Beat settings
+CELERY_BEAT_SCHEDULE = {
+    'fetch-crypto-prices-every-5-minutes': {
+        'task': 'accounts.tasks.fetch_crypto_prices_task',
+        'schedule': 300.0,  # Every 5 minutes
+    },
+}
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 

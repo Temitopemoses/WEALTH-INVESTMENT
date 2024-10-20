@@ -136,7 +136,7 @@
     <div class="container">
         <!-- Logo Section -->
         <a class="navbar-brand" href="#">
-            <img src="img/20240903_184039.png" alt="Logo">
+            <img src="{% static "img/20240903_184039.png" %}" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -144,25 +144,25 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="sss.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a class="nav-link" href="{% url "dashboard" %}"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="deposit.html"><i class="fas fa-upload"></i> Deposit</a>
+                    <a class="nav-link" href="{% url "deposit" %}"><i class="fas fa-upload"></i> Deposit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
+                    <a class="nav-link" href="{% url "withdraw" %}"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href=""><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a class="nav-link" href="transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transactionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-file-alt"></i> Transactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
-                        <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
-                        <li><a class="dropdown-item" href="?a=deposit_history">Deposits</a></li>
-                        <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
+                        <li><a class="dropdown-item" href="{% url "transaction" %}">All Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url "deposit" %}">Deposits</a></li>
+                        <li><a class="dropdown-item" href="{% url "withdraw" %}">Withdrawals</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -170,9 +170,9 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="">My Profile</a></li>
-                        <li><a class="dropdown-item" href="">My Referral</a></li>
-                        <li><a class="dropdown-item" href="">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">My Referral</a></li>
+                        <li><a class="dropdown-item" href="{% url "logout" %}">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -180,7 +180,7 @@
     </div>
 </nav>
 
-<img src="img\Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
+<img src="{% static "img\Stock market or forex trading graph in futuristic concept.jpeg"%}" alt="Dashboard Header" class="header-image">
 
 <!-- Content Section -->
 <div class="container mt-5">
@@ -223,20 +223,20 @@
                                 <tbody>
                                     <tr>
                                         <td></td>
-                                        <td><img src="img\1000.gif" width="44" height="17" align ="absmiddle"> Bitcoin (BTC)</td>
+                                        <td><img src="{% static "img\1000.gif"%}" width="44" height="17" align ="absmiddle"> Bitcoin (BTC)</td>
                                         <td><b style="color:green">$0.00</b></td>
                                         <td><b style="color:red">$0.00</b></td>
                                         <td><a href="?a=edit_account"><i>not set</i></a></td>                                    </tr>
                                     <tr>
                                         <td></td>
-                                        <td><img src="img\1001.gif" width="44" height="17" align="absmiddle"> Ethereum (ETH)</td>
+                                        <td><img src="{% static 'img\1001.gif' %}" width="44" height="17" align="absmiddle"> Ethereum (ETH)</td>
                                         <td><b style="color:green">$0.00</b></td>
                                         <td><b style="color:red">$0.00</b></td>
                                         <td><a href="?a=edit_account"><i>not set</i></a></td>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td><img src="img\1002.gif" width="44" height="17" align="absmiddle"> USDT (TRC20)</td>
+                                        <td><img src="{% static 'img\1002.gif' %}" width="44" height="17" align="absmiddle"> USDT (TRC20)</td>
                                         <td><b style="color:green">$0.00</b></td>
                                         <td><b style="color:red">$0.00</b></td>
                                         <td><a href="?a=edit_account"><i>not set</i></a></td>

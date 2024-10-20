@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>WealthWise Investment</title>
-    <link rel="icon" href="img\20240903_184039.png" type="image/jpg">
+    <link rel="icon" href="{% static "img\20240903_184039.png" %}" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -133,7 +134,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="img/20240903_184039.png" alt="Logo">
+            <img src="{% static "img/20240903_184039.png" %}" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -141,25 +142,25 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a class="nav-link" href="{% url "dashboard" %}"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="deposit.html"><i class="fas fa-upload"></i> Deposit</a>
+                    <a class="nav-link" href="{% url "deposit" %}"><i class="fas fa-upload"></i> Deposit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="withdraw.html"><i class="fas fa-download"></i> Withdraw</a>
+                    <a class="nav-link" href="{% url "withdraw" %}"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=internal_transfer"><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a class="nav-link" href="transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transactionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-file-alt"></i> Transactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
-                        <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
-                        <li><a class="dropdown-item" href="transaction.html">Deposits</a></li>
-                        <li><a class="dropdown-item" href="?a=withdraw_history">Withdrawals</a></li>
+                        <li><a class="dropdown-item" href="{% url "transaction" %}">All Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url "deposit" %}">Deposits</a></li>
+                        <li><a class="dropdown-item" href="{% url "withdraw" %}">Withdrawals</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -167,9 +168,9 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
-                        <li><a class="dropdown-item" href="refferal.html">My Referral</a></li>
-                        <li><a class="dropdown-item" href="Signup.html">Sign Out</a></li>
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">My Referral</a></li>
+                        <li><a class="dropdown-item" href="{% url "logout" %}">Sign Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -178,7 +179,7 @@
 </nav>
 
 <!-- Full-Width Image -->
-<img src="img/Stock market or forex trading graph in futuristic concept.jpeg" alt="Dashboard Header" class="header-image">
+<img src="{% static "img/Stock market or forex trading graph in futuristic concept.jpeg" %}" alt="Dashboard Header" class="header-image">
 
 <div class="container mt-5">
     <div class="row">
@@ -187,7 +188,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Make Deposit</h3>
                     <p class="card-description"><small>Fill the form below</small></p>
-                    <form method="post" name="spendform" class="forms-sample">
+                    <form method="#" name="spendform" class="forms-sample">
                         <div class="mb-3">
                             <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
                             <select name="" class="form-select">

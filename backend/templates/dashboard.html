@@ -141,7 +141,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    <a class="nav-link" href="{% url "dashboard" %}"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "deposit" %}"><i class="fas fa-upload"></i> Deposit</a>
@@ -157,7 +157,7 @@
                         <i class="fas fa-file-alt"></i> Transactions
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="transactionDropdown">
-                        <li><a class="dropdown-item" href="transaction.html">All Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url "transaction" %}">All Transactions</a></li>
                         <li><a class="dropdown-item" href="{% url "deposit" %}">Deposits</a></li>
                         <li><a class="dropdown-item" href="{% url "withdraw" %}">Withdrawals</a></li>
                     </ul>
@@ -167,8 +167,8 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
-                        <li><a class="dropdown-item" href="refferal.html">My Referral</a></li>
+                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="#">My Referral</a></li>
                         <li><a class="dropdown-item" href="{% url "logout" %}">Sign Out</a></li>
                     </ul>
                 </li>
@@ -187,21 +187,25 @@
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Total Balance</h5>
-                <p>${{request.user.wallet.balance}}7</p>
+                {% if wallet.balance == "0E-8" %}
+                    <p>$0.00</p>
+                {% else %}
+                    <p>${{wallet.balance}}</p>
+                {% endif %}
             </div>
         </div>
         <!-- Example Card 2 -->
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Recent Deposits</h5>
-                <p>$5,000.00</p>
+                <p>$0.00</p>
             </div>
         </div>
         <!-- Example Card 3 -->
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Recent Withdrawals</h5>
-                <p>$1,200.00</p>
+                <p>$0.00</p>
             </div>
         </div>
     </div>
