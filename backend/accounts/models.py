@@ -55,11 +55,28 @@ class Cryptocurrency(models.Model):
     price_usd = models.DecimalField(max_digits=20, decimal_places=8, default=0.0)  # Store real-time price in USD
     last_updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.name} ({self.symbol})"
+    
+    class Meta:
+        ordering = ("-last_updated",)
+        verbose_name = 'Cryptocurrency'
+        verbose_name_plural = 'Cryptocurrencies'
+
 
 class Wallet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)
+    crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE, null=True)
     balance = models.DecimalField(max_digits=20, decimal_places=8, default=0.0)  # Balance in respective crypto
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f"{self.user.username}'s Wallet"
+    
+    class Meta:
+        ordering = ['last_updated']
 
 
 
@@ -87,3 +104,11 @@ class Transaction(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
     timestamp = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=100, null=True, blank=True)  # Store payment provider's ID
+
+
+    def __str__(self):
+        return f"{self.payment_id}"
+    
+    class Meta:
+        ordering = ('-timestamp',)
+        verbose_name_plural = 'Transactions'

@@ -121,6 +121,64 @@
     <!-- page-body-wrapper ends -->
 </div>
 
+<script>
+    document.querySelector('.auth-form-btn').addEventListener('click', function() {
+        // Get password inputs and relevant DOM elements
+        const password = document.regform.password.value;
+        const password2 = document.regform.password2.value;
+        const passwordField = document.regform.password;
+        const password2Field = document.regform.password2;
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message'; // Class for styling the error message
+
+        // Common passwords array (you can expand this list)
+        const commonPasswords = [
+            '123456', 'password', '123456789', '12345678', '12345', '1234567', 
+            'qwerty', 'abc123', 'football', 'monkey', 'letmein', 'welcome', 
+            'admin', '123123', 'sunshine', 'iloveyou'
+        ];
+
+        // Clear previous error messages
+        const existingErrorMessage = document.querySelector('.error-message');
+        if (existingErrorMessage) {
+            existingErrorMessage.remove();
+        }
+
+        // Reset field borders
+        passwordField.style.borderColor = '';
+        password2Field.style.borderColor = '';
+
+        // Validate passwords
+        if (password !== password2) {
+            passwordField.style.borderColor = 'red';
+            password2Field.style.borderColor = 'red';
+            errorMessage.innerText = "Passwords do not match.";
+            errorMessage.style.color = 'red';
+            document.querySelector('.auth-form-light').appendChild(errorMessage);
+            return;
+        }
+
+        // Check if the password is common
+        if (commonPasswords.includes(password)) {
+            passwordField.style.borderColor = 'red';
+            errorMessage.innerText = "This password is too common. Please choose a different password.";
+            errorMessage.style.color = 'red';
+            document.querySelector('.auth-form-light').appendChild(errorMessage);
+            return;
+        }
+
+        // If all checks are passed, clear the fields and proceed (actual submission logic can go here)
+        passwordField.style.borderColor = '';
+        password2Field.style.borderColor = '';
+        errorMessage.innerText = "Account created successfully!"; // Placeholder for actual submission
+        errorMessage.style.color = 'green';
+        document.querySelector('.auth-form-light').appendChild(errorMessage);
+        // Uncomment the line below to actually submit the form
+        document.regform.submit(); 
+    });
+</script>
+
+
 <!-- Required JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

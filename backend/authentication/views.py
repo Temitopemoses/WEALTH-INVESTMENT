@@ -7,6 +7,8 @@ from django.contrib import auth
 from django.contrib import messages
 from django.views import View
 
+from accounts.models import Wallet
+
 User = get_user_model()
 
 # Create your views here.
@@ -95,6 +97,9 @@ def signup(request):
         
         user.is_active = True
         user.save()
+
+        user_wallet = Wallet.objects.create(user=user)
+        user_wallet.save();
       
         # Use the backend parameter when logging in
         login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend

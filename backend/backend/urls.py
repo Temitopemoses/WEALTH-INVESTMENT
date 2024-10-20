@@ -23,6 +23,9 @@ urlpatterns = [
     # URL path for authorization and authentication
     path('', include('authentication.urls')),
     
-    # URL path for dashboard activities and authentication
-    path('user/', include('users.urls')),
+    # # URL path for dashboard activities and authentication
+    # path('user/', include('users.urls')),
+
+    # URL path for accounts activities and authentication
+    path('user/', include('accounts.urls')),
 ]

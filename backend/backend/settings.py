@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "authentication",
-    'users',
+    # 'users',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -115,8 +116,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = "users.User"
-LOGIN_URL = '/auth/login/'
+AUTH_USER_MODEL = "accounts.User"
+LOGIN_URL = '/authUser/login/'
 
 AUTHENTICATION_BACKENDS = [
     'authentication.backends.CustomAuthenticationBackend',

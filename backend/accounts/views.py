@@ -8,6 +8,7 @@ from .models import Cryptocurrency, Wallet, Transaction
 # Create your views here.
 
 User = get_user_model()
+# Wallet = Wallet.objects.get()
 
 @login_required(redirect_field_name='next', login_url='/auth/login/')
 def dashboard(request):

@@ -219,7 +219,7 @@ body {
   padding: 100px 20px;
   text-align: center;
   color: #333;
-  background: url('image-8.jpg') no-repeat center center/cover;
+  background: url('./img/image-8.jpg') no-repeat center center/cover;
 }
 
 .hero-section h1 {

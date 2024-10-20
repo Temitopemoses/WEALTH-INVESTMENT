@@ -4,6 +4,9 @@ from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 # from django.contrib.auth.models import User
+# from authentication.views import Wallet
+
+from django.apps import apps
 
 class CustomUserManager(BaseUserManager):
     def email_validator(self, email):
@@ -59,4 +62,7 @@ class CustomUserManager(BaseUserManager):
 
         user = self.create_user(email=email, username=username, first_name=first_name, last_name=last_name, password=password, **extra_fields)
         user.save(using=self.db)
+        Wallet = apps.get_model('accounts', 'Wallet')
+        user_wallet = Wallet.objects.create(user=user)
+        user_wallet.save()
         return user
