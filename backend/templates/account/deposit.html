@@ -1,11 +1,10 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>wealthwiseinvestment</title>
+    <title>WealthWise Investment</title>
     <link rel="icon" href="{% static "img\20240903_184039.png" %}" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -18,17 +17,16 @@
 
         .navbar {
             background-color: #eceef0;
-            font-family: Verdana, sans-serif;
         }
 
         .navbar-brand img {
-            width: 170px; /* Adjusted logo size */
+            width: 170px;
             height: 100px;
         }
 
         .navbar-nav .nav-link {
             color: #181717;
-            font-size: 12px; /* Further reduced font size */
+            font-size: 12px;
         }
 
         .navbar-nav .nav-link:hover {
@@ -36,7 +34,7 @@
         }
 
         .navbar-toggler {
-            border-color: #ffffff; /* Optional: change the border color to match */
+            border-color: #ffffff;
         }
 
         .navbar-toggler-icon {
@@ -45,12 +43,11 @@
 
         .dropdown-menu {
             background-color: #eceef0;
-            font-family: Verdana, sans-serif;
         }
 
         .dropdown-item {
             color: #000000;
-            font-size: 12px; /* Reduced font size */
+            font-size: 12px;
         }
 
         .dropdown-item:hover {
@@ -60,11 +57,12 @@
 
         .header-image {
             width: 100%;
-            height: 150px; /* Adjusted height */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
+            height: 150px;
+            object-fit: cover;
             margin-bottom: 1.5rem;
         }
-        .dashboard-card {
+
+        .dashboard-card, .tradingview-widget-container {
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 1rem;
@@ -73,44 +71,18 @@
         }
 
         .card {
-            border: 1px solid #eceef0; /* Adjusted border thickness */
+            border: 1px solid #eceef0;
             border-radius: 0.5rem;
             box-shadow: rgb(199, 197, 216) 4px 8px 9px -2px;
-            display: flex;
         }
 
         .btn-long {
-            width: 100%; /* Makes the button take the full width */
+            width: 100%;
         }
 
         .form-control, .form-select {
-            font-size: 0.875rem; /* Smaller font size */
+            font-size: 0.875rem;
         }
-        /* TradingView Widget Styling */
-        .tradingview-widget-container {
-    width: 100vw; /* Full viewport width */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-    padding: 0; /* Remove padding */
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure nothing overflows */
-}
-
-.tradingview-widget-container iframe {
-    width: 100%; /* Ensure the iframe takes full width */
-    height: 74px;
-    border: none; /* Remove any borders */
-}
-
-@media (max-width: 768px) {
-    .tradingview-widget-container {
-        padding: 0; /* Ensure no padding on smaller screens */
-        margin-top: 1rem;
-    }
-}
 
         .footer {
             background-color: #eceef0;
@@ -118,10 +90,40 @@
             margin-top: 2rem;
             text-align: center;
         }
-        
+
         .footer span {
             color: #6c757d;
             font-size: 0.875rem;
+        }
+
+        h3.card-title {
+            font-size: 1.1rem; /* Larger size for prominence */
+        }
+
+          
+        .tradingview-widget-container {
+            width: 100vw; /* Full viewport width */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            padding: 0; /* Remove padding */
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Ensure nothing overflows */
+        }
+
+        .tradingview-widget-container iframe {
+            width: 100%; /* Ensure the iframe takes full width */
+            height: 74px;
+            border: none; /* Remove any borders */
+        }
+
+        @media (max-width: 768px) {
+            .tradingview-widget-container {
+                padding: 0; /* Ensure no padding on smaller screens */
+                margin-top: 1rem;
+            }
         }
 
     </style>
@@ -131,7 +133,6 @@
 <!-- Top Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <!-- Logo Section -->
         <a class="navbar-brand" href="#">
             <img src="{% static "img/20240903_184039.png" %}" alt="Logo">
         </a>
@@ -178,41 +179,58 @@
 </nav>
 
 <!-- Full-Width Image -->
-<img src="{% static "img\Stock market or forex trading graph in futuristic concept.jpeg"%}" alt="Dashboard Header" class="header-image">
+<img src="{% static "img/Stock market or forex trading graph in futuristic concept.jpeg" %}" alt="Dashboard Header" class="header-image">
 
-<!-- Dashboard Content -->
-<div class="container-dashboard">
+<div class="container mt-5">
     <div class="row">
-        <!-- Example Card 1 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Total Balance</h5>
-                {% if wallet.balance == "0E-8" %}
-                    <p>$0.00</p>
-                {% else %}
-                    <p>${{wallet.balance}}</p>
-                {% endif %}
-            </div>
-        </div>
-        <!-- Example Card 2 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Deposits</h5>
-                <p>$0.00</p>
-            </div>
-        </div>
-        <!-- Example Card 3 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="dashboard-card">
-                <h5>Recent Withdrawals</h5>
-                <p>$0.00</p>
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Make Deposit</h3>
+                    <p class="card-description"><small>Fill the form below</small></p>
+                    <form method="#" name="spendform" class="forms-sample">
+                        <div class="mb-3">
+                            <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
+                            <select name="" class="form-select">
+                                <option value="">Choose Plan</option>
+                                <option value="1">Meta Trade Account</option>
+                                <option value="2">Stock Market Account</option>
+                                <option value="3">Real Estate Account</option>
+                                <option value="4">Contract Account</option>
+                                <option value="5">Retirement Account</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Enter Amount: <span class="tx-danger">*</span></label>
+                            <input type="text" name="amount" value="30.00" placeholder="10" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <p>Select Payment Option</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1000">
+                                <label class="form-check-label">Bitcoin (BTC)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1001">
+                                <label class="form-check-label">Ethereum (ETH)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="process_1002">
+                                <label class="form-check-label">USDT (TRC20)</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success btn-long" type="submit">Make Deposit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- TradingView Widget -->
-<div class="tradingview-widget-container" style="width: 100%; height: 74px;">
+  <!-- TradingView Widget -->
+  <div class="tradingview-widget-container" style="width: 100%; height: 74px;">
 
     <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22BTC%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22ETH%2FUSD%22%7D%2C%7B%22description%22%3A%22USDT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDTUSD%22%7D%2C%7B%22description%22%3A%22XRP%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXRPUSD%22%7D%2C%7B%22description%22%3A%22BCH%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ABCHUSD%22%7D%2C%7B%22description%22%3A%22BNB%2FUSD%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22DOT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ADOTUSD%22%7D%2C%7B%22description%22%3A%22LINK%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALINKUSD%22%7D%2C%7B%22description%22%3A%22BSV%2FUSD%22%2C%22proName%22%3A%22BITBAY%3ABSVUSD%22%7D%2C%7B%22description%22%3A%22CRO%2FUSD%22%2C%22proName%22%3A%22BITTREX%3ACROUSD%22%7D%2C%7B%22description%22%3A%22ADAUSD%22%2C%22proName%22%3A%22KRAKEN%3AADAUSD%22%7D%2C%7B%22description%22%3A%22LTC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22USDC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDCUSD%22%7D%2C%7B%22description%22%3A%22TRX%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ATRXUSD%22%7D%2C%7B%22description%22%3A%22XMR%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXMRUSD%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22compact%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A74%2C%22utm_source%22%3A%22mybridgetrustinvests.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%2C%22page-uri%22%3A%22mybridgetrustinvests.com%2F%22%7D" title="ticker tape TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 74px; width: 100%;"></iframe>
 
@@ -256,13 +274,15 @@ color: #2962FF !important;
 </style></div>
 </div>
 <!-- TradingView Widget END -->
+
 <!-- Footer -->
 <footer class="footer">
-    <span>© 2024 WealthWise Investment. All rights reserved.</span>
+    <div class="container">
+        <span>&copy; 2024 WealthWise Investment. All Rights Reserved.</span>
+    </div>
 </footer>
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

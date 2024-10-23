@@ -1,0 +1,171 @@
+{% extends 'account/base.html' %}
+{% load static %}
+
+{% block title %} {{request.user.get_full_name}}'s Profile {% endblock %}
+
+{% block content %}
+
+<!-- Profile Container -->
+<div class="container profile-container">
+    <div class="profile-header">
+        <h3>User Profile</h3>
+        <p>Manage your personal details</p>
+    </div>
+
+    <div class="container">
+        {% if messages %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for message in messages %}
+                <strong> {{message}}</strong>
+                {% endfor %}
+            </div>
+            <button type="buttom" class="close" data-dismiss="alert" arial-label="Close">
+            <span arial-hidden="true">&times:</span>
+            </button>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <form method="POST", action="{% url 'profile' %}">
+        {% csrf_token %}
+        <!-- Name (Disabled) -->
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">First Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" value="{{user.first_name}}" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Last Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name" value="{{user.last_name}}" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="username" name="username" value="{{user.username}}">
+            </div>
+        </div>
+
+        <!-- Email (Editable) -->
+        <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" value="{{user.email}}" disabled>
+            </div>
+        </div>
+
+        <!-- Bitcoin Address (Editable) -->
+        <div class="form-group row">
+            <label for="btc-address" class="col-sm-3 col-form-label">Secret Question</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="btc-address" name="secret_question" value="{{user.secret_question}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="btc-address" class="col-sm-3 col-form-label">Secret Answer</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="btc-address" name="secret_question_answer" value="{{user.secret_question_answer}}">
+            </div>
+        </div>
+
+        <!-- Registration Date (Disabled) -->
+        <div class="form-group row">
+            <label for="reg-date" class="col-sm-3 col-form-label">Date Joined</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="reg-date" value="{{user.date_joined}}" disabled>
+            </div>
+        </div>
+        <!-- Registration Date (Disabled) -->
+        <div class="form-group row">
+            <label for="reg-date" class="col-sm-3 col-form-label">Last Login</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="reg-date" value="{{user.last_login}}" disabled>
+            </div>
+        </div>
+
+        <!-- Bitcoin Address (Editable) -->
+        <div class="form-group row">
+            <label for="btc-address" class="col-sm-3 col-form-label">Bitcoin Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="btc-address" value="1FzWLkYX9hnPjUwwgM8c1yzWEwF2ySABC">
+            </div>
+        </div>
+
+        <!-- TRC20 Address (Editable) -->
+        <div class="form-group row">
+            <label for="trc-address" class="col-sm-3 col-form-label">TRC20 Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="trc-address" value="TX6ZZ2MA9fn8qfpqXH5QeTRJ7hHABC">
+            </div>
+        </div>
+
+        <!-- Ethereum Address (Editable) -->
+        <div class="form-group row">
+            <label for="eth-address" class="col-sm-3 col-form-label">Ethereum Address</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="eth-address" value="0x1234abcd5678efghijkl">
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- TradingView Widget -->
+
+
+<div class="tradingview-widget-container" style="width: 100%; height: 74px;">
+
+    <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/ticker-tape/?locale=en#%7B%22symbols%22%3A%5B%7B%22proName%22%3A%22BITSTAMP%3ABTCUSD%22%2C%22title%22%3A%22BTC%2FUSD%22%7D%2C%7B%22proName%22%3A%22BITSTAMP%3AETHUSD%22%2C%22title%22%3A%22ETH%2FUSD%22%7D%2C%7B%22description%22%3A%22USDT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDTUSD%22%7D%2C%7B%22description%22%3A%22XRP%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXRPUSD%22%7D%2C%7B%22description%22%3A%22BCH%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ABCHUSD%22%7D%2C%7B%22description%22%3A%22BNB%2FUSD%22%2C%22proName%22%3A%22BINANCE%3ABNBUSD%22%7D%2C%7B%22description%22%3A%22DOT%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ADOTUSD%22%7D%2C%7B%22description%22%3A%22LINK%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALINKUSD%22%7D%2C%7B%22description%22%3A%22BSV%2FUSD%22%2C%22proName%22%3A%22BITBAY%3ABSVUSD%22%7D%2C%7B%22description%22%3A%22CRO%2FUSD%22%2C%22proName%22%3A%22BITTREX%3ACROUSD%22%7D%2C%7B%22description%22%3A%22ADAUSD%22%2C%22proName%22%3A%22KRAKEN%3AADAUSD%22%7D%2C%7B%22description%22%3A%22LTC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ALTCUSD%22%7D%2C%7B%22description%22%3A%22USDC%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AUSDCUSD%22%7D%2C%7B%22description%22%3A%22TRX%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3ATRXUSD%22%7D%2C%7B%22description%22%3A%22XMR%2FUSD%22%2C%22proName%22%3A%22KRAKEN%3AXMRUSD%22%7D%5D%2C%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22compact%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A74%2C%22utm_source%22%3A%22mybridgetrustinvests.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22ticker-tape%22%2C%22page-uri%22%3A%22mybridgetrustinvests.com%2F%22%7D" title="ticker tape TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: 74px; width: 100%;"></iframe>
+
+    
+
+  <style>
+.tradingview-widget-copyright {
+font-size: 13px !important;
+line-height: 32px !important;
+text-align: center !important;
+vertical-align: middle !important;
+/* @mixin sf-pro-display-font; */
+font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright .blue-text {
+color: #2962FF !important;
+}
+
+.tradingview-widget-copyright a {
+text-decoration: none !important;
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:visited {
+color: #B2B5BE !important;
+}
+
+.tradingview-widget-copyright a:hover .blue-text {
+color: #1E53E5 !important;
+}
+
+.tradingview-widget-copyright a:active .blue-text {
+color: #1848CC !important;
+}
+
+.tradingview-widget-copyright a:visited .blue-text {
+color: #2962FF !important;
+}
+</style></div>
+
+<!-- TradingView Widget END -->
+
+{% endblock %}

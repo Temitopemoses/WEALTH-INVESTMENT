@@ -109,15 +109,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Africa/Lagos'
+USE_TZ = True  # This ensures Django uses timezone-aware datetimes
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
 
 AUTH_USER_MODEL = "accounts.User"
-LOGIN_URL = '/authUser/login/'
+LOGIN_URL = '/accounts/auth/login/'
 
 AUTHENTICATION_BACKENDS = [
     'authentication.backends.CustomAuthenticationBackend',

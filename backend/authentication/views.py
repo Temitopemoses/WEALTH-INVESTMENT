@@ -51,7 +51,7 @@ class LoginView(View):
           # print(username, password)
           login(request, user)
           print('logged in')
-          return redirect('dashboard')
+          return render(request, 'account/dashboard.html')
       
       else:
           print('not logged in')
@@ -102,10 +102,11 @@ def signup(request):
         user_wallet.save();
       
         # Use the backend parameter when logging in
-        login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
+        # login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
+        login(request, user)  # Replace with your actual backend
 
         update_last_login(None, user)
-        return redirect("dashboard")
+        return render(request, "account/dashboard.html")
     
     else:
       messages.error(request, 'Password Does Not Match!')

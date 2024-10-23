@@ -9,7 +9,7 @@ urlpatterns = [
     path('support/', views.Support.as_view(), name="support"),
     path('investment-plans/', views.Investment.as_view(), name="investment"),
     path('policy/', views.Policy.as_view(), name="policy"),
-    path('accounts/authUser/login/', views.LoginView.as_view(), name='login'),
-    path('accounts/authUser/signup/', view=signup, name='signup'),
-    path('accounts/authUser/logout/', views.Logout, name='logout'),
+    path('accounts/auth/login/', views.LoginView.as_view(), name='login'),
+    path('accounts/auth/signup/', view=signup, name='signup'),
+    path('accounts/auth/logout/', views.Logout, name='logout'),
 ]
