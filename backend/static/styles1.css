@@ -219,7 +219,7 @@ body {
   padding: 100px 20px;
   text-align: center;
   color: #333;
-  background: url('image-8.jpg') no-repeat center center/cover;
+  background: url('./img/image-8.jpg') no-repeat center center/cover;
 }
 
 .hero-section h1 {
@@ -647,7 +647,7 @@ body {
 
 .about-top {
   position: relative;
-  background: url('professional-image.jpg') no-repeat center center/cover;
+  background: url('./img/professional-image.jpg') no-repeat center center/cover;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -757,7 +757,7 @@ body {
 
 .policy-top {
   position: relative;
-  background: url('professional-background.jpg') no-repeat center center/cover;
+  background: url('./img/professional-background.jpg') no-repeat center center/cover;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -877,7 +877,7 @@ body {
 
 .investment-top {
   position: relative;
-  background: url('investment-background.jpg') no-repeat center center/cover;
+  background: url('./img/investment-background.jpg') no-repeat center center/cover;
   height: 400px;
   display: flex;
   justify-content: center;

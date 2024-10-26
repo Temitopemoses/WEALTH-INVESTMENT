@@ -7,6 +7,14 @@ from django.contrib import auth
 from django.contrib import messages
 from django.views import View
 
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.conf import settings
+import random
+import string
+
+from django.contrib.auth.hashers import make_password
+
 from accounts.models import Wallet
 
 User = get_user_model()
@@ -102,8 +110,8 @@ def signup(request):
         user_wallet.save();
       
         # Use the backend parameter when logging in
-        # login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
-        login(request, user)  # Replace with your actual backend
+        login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
+        # login(request, user)  # Replace with your actual backend
 
         update_last_login(None, user)
         return render(request, "account/dashboard.html")
@@ -121,3 +129,113 @@ def signup(request):
 def Logout(request):
   logout(request)
   return redirect('login')  # Redirect after logout
+
+
+
+
+def generate_token():
+    """Generate a random 6-digit token"""
+    return ''.join(random.choices(string.digits, k=6))
+
+def password_reset_request(request):
+
+  if request.method == 'POST':
+
+    email = request.POST.get('email', None)
+    print(email)
+
+    try:
+      user = User.objects.get(email=email)
+      print(user)
+
+      if user:
+        # Generate the token
+        token = generate_token()
+
+        # Store the token and user ID in session (with expiration)
+        request.session['reset_token'] = token
+        request.session['user_id'] = user.id
+        
+        # Set session expiry to 10 minutes (600 seconds)
+        request.session.set_expiry(600)  # Session expires in 10 minutes
+
+        # Send the token via email
+        send_mail(
+            subject='Your Password Reset Token',
+            message=f'Your password reset token is: {token}',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+        )
+
+        messages.success(request, 'A password reset token has been sent to your email.')
+        return redirect('password_reset_confirm')
+
+    except User.DoesNotExist as e:
+      messages.error(request, 'No account found with the provided email or username.')
+      return render(request, 'auth/password_reset_request.html')
+        
+  else:
+     return render(request, 'auth/password_reset_request.html')
+
+
+
+from django.contrib.auth.hashers import make_password
+
+def password_reset_confirm(request):
+    
+  if request.method == 'POST':
+      
+    token = request.POST.get('token')
+    new_password = request.POST.get('new_password')
+    confirm_password = request.POST.get('confirm_password')
+
+    # Retrieve the token and user ID from session
+    session_token = request.session.get('reset_token')
+    print(session_token)
+    user_id = request.session.get('user_id')
+
+    if not session_token or not user_id:
+        messages.error(request, 'Session expired or invalid token.')
+        return redirect('password_reset_request')
+
+    if token == session_token:
+        return redirect('setNewPassword')
+    else:
+        messages.error(request, 'Invalid token.')
+      
+    
+  return render(request, 'auth/password_reset_confirm.html')
+
+
+def setNewPassword(request):
+   if request.method == "POST":
+      
+      # Retrieve the token and user ID from session
+      session_token = request.session.get('reset_token')
+      print(session_token)
+      user_id = request.session.get('user_id')
+
+      if not session_token or not user_id:
+          messages.error(request, 'Session expired or invalid token.')
+          return redirect('password_reset_request')
+      
+      new_password = request.POST.get('password')
+      confirm_password = request.POST.get('confirm_password')
+
+      # Check if passwords match
+      if new_password == confirm_password:
+          # Update the user's password
+          user = User.objects.get(id=user_id)
+          user.password = make_password(new_password)
+          user.save()
+
+          # Clear session data
+          request.session.pop('reset_token')
+          request.session.pop('user_id')
+
+          messages.success(request, 'Your password has been reset successfully.')
+          return redirect('login')
+      else:
+          messages.error(request, 'Passwords do not match.')
+
+   return render(request, 'auth/reset_password.html')
