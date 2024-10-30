@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0a%72fy-ed)a*s1&&t#oo*ls@gxh9aaokxvxt(x2sos+7fxg*n'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool, default=False)
 
 ALLOWED_HOSTS = []
 
@@ -128,7 +130,7 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = config("CELERY_BROKER_URL")
 
 # Celery Beat settings
 CELERY_BEAT_SCHEDULE = {
@@ -144,11 +146,13 @@ CELERY_BEAT_SCHEDULE = {
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your_email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your_email_password'
+# EMAIL_PORT = config("EMAIL_PORT")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = 'MyWealthInvesments'
+
+COINBASE_API_KEY = config("COINBASE_API_KEY")
 
 
 # Static files (CSS, JavaScript, Images)

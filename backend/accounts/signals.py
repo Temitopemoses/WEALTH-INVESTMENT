@@ -140,7 +140,7 @@ def get_location_info(ip_address):
 @receiver(post_save, sender=User)
 def send_onboarding_message(sender, instance, created, **kwargs):
     company_name = "Wealth Wise Investments"
-    if instance.onboarding_completed and not instance.is_verified:
+    if not instance.is_verified:
        # Email Subject
         subject = f"Welcome to {company_name} – Let’s Get Started!"
 

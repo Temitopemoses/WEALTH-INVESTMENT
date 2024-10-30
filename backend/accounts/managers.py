@@ -64,5 +64,6 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self.db)
         Wallet = apps.get_model('accounts', 'Wallet')
         user_wallet = Wallet.objects.create(user=user)
+        print(user_wallet)
         user_wallet.save()
         return user

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>wealthwiseinvestment</title>
+    <title>Your Transactions - WealthWise Investment</title>
     <link rel="icon" href="{% static "img\20240903_184039.png" %}" type="image/jpg">
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -144,7 +144,7 @@
                     <a class="nav-link" href="{% url "withdraw" %}"><i class="fas fa-download"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="transfer.html"><i class="fas fa-exchange-alt"></i> Transfer</a>
+                    <a class="nav-link" href="{% url 'transfer' %}"><i class="fas fa-exchange-alt"></i> Transfer</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="transactionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -161,7 +161,7 @@
                         <i class="fas fa-user"></i> Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
                         <li><a class="dropdown-item" href="#">My Referral</a></li>
                         <li><a class="dropdown-item" href="{% url "logout" %}">Sign Out</a></li>
                     </ul>
@@ -184,30 +184,32 @@
 
                         <!-- Form Section -->
                         <div class="table-responsive">
-                            <form method="post" name="opts">
-                                <input type="hidden" name="form_id" value="17261775993564">
-                                <input type="hidden" name="form_token" value="82bdb88e886cb2987301d2a7e15f9a52">
-                                <input type="hidden" name="a" value="history">
-                                <input type="hidden" name="page" value="1">
+                            <form method="post" action="{% url 'transaction' %}" name="opts">
+                                {% csrf_token %}
+                                {% comment %} <input type="hidden" name="form_id" value="17261775993564"> {% endcomment %}
+                                {% comment %} <input type="hidden" name="form_token" value="82bdb88e886cb2987301d2a7e15f9a52"> {% endcomment %}
+                                {% comment %} <input type="hidden" name="a" value="history">
+                                <input type="hidden" name="page" value="1"> {% endcomment %}
 
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label for="transactionType" class="form-label">Transaction Type</label>
-                                        <select name="type" class="form-control" id="transactionType" onchange="document.opts.submit();">
+                                        {% comment %} <select name="type" class="form-control" id="transactionType" onchange="document.opts.submit();"> {% endcomment %}
+                                        <select name="type" class="form-control" id="transactionType">
                                             <option value="">All transactions</option>
-                                            <option value="deposit">Deposit</option>
-                                            <option value="withdrawal">Withdrawal</option>
-                                            <option value="earning">Earning</option>
-                                            <option value="commissions">Referral commission</option>
+                                            <option value="Deposit">Deposit</option>
+                                            <option value="Withdrawal">Withdrawal</option>
+                                            <option value="Earning">Earning</option>
+                                            <option value="C">Referral commission</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="currencyType" class="form-label">eCurrency Type</label>
-                                        <select name="ec" class="form-control" id="currencyType">
-                                            <option value="-1">All eCurrencies</option>
-                                            <option value="1000">Bitcoin (BTC)</option>
-                                            <option value="1001">Ethereum (ETH)</option>
-                                            <option value="1002">USDT (TRC20)</option>
+                                        <select name="currency" class="form-control" id="currencyType">
+                                            <option value="-1">All currencies</option>
+                                            <option value="BTC">Bitcoin (BTC)</option>
+                                            <option value="ETH">Ethereum (ETH)</option>
+                                            <option value="USDT">USDT (TRC20)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -216,29 +218,18 @@
                                     <div class="col-md-6">
                                         <label class="form-label">From Date:</label>
                                         <div class="d-flex">
-                                            <select name="month_from" class="form-control me-2">
+                                            <select name="date_from" class="form-control me-2">
                                                 <!-- Month options -->
-                                            </select>
-                                            <select name="day_from" class="form-control me-2">
-                                                <!-- Day options -->
-                                            </select>
-                                            <select name="year_from" class="form-control">
-                                                <!-- Year options -->
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">To Date:</label>
                                         <div class="d-flex">
-                                            <select name="month_to" class="form-control me-2">
-                                                <!-- Month options -->
-                                            </select>
                                             <select name="day_to" class="form-control me-2">
                                                 <!-- Day options -->
                                             </select>
-                                            <select name="year_to" class="form-control">
-                                                <!-- Year options -->
-                                            </select>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -250,19 +241,35 @@
                         </div>
 
                         <!-- Transactions Table -->
+                        
                         <div class="table-responsive mt-3">
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Type</th>
-                                        <th width="200">Amount</th>
-                                        <th width="170">Date</th>
+                                        <th class="text-center">Type</th>
+                                        <th class="text-center">Currency</th>
+                                        <th class="text-center">Amount</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td colspan="3" class="text-center">No transactions found</td>
-                                    </tr>
+                                    {% if transactions.exists %}
+                                        {% for transaction in transactions %}
+                                        <tr>
+                                            
+                                            <td class="text-center">{{transaction.transaction_type}}</td>
+                                            <td class="text-center">{{transaction.crypto}}</td>
+                                            <td class="text-center">{{transaction.amount}}</td>
+                                            <td class="text-center">{{transaction.status}}</td>
+                                            <td class="text-center">{{transaction.timestamp}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3" class="text-center">No transactions found</td>
+                                        </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
 
@@ -273,6 +280,7 @@
                                 <li class="page-item"><a class="next page-link disabled">&gt;&gt;</a></li>
                             </ul>
                         </div>
+                        
                     </div>
                 </div>
             </div>
