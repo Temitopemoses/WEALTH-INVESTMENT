@@ -17,7 +17,7 @@ User = get_user_model()
 client = Client(api_key=settings.COINBASE_API_KEY)
 print(settings.COINBASE_API_KEY)
 
-@login_required(redirect_field_name='next')
+@login_required
 def dashboard(request):
 
   user = request.user
@@ -27,23 +27,36 @@ def dashboard(request):
   return render(request, 'account/dashboard.html', context)
 
 
-@login_required(redirect_field_name='next', login_url='/accounts/auth/login/')
+@login_required
 def userProfile(request):
    
    if request.method == "POST":
       username = request.POST.get("username", None)
       secret_question = request.POST.get("secret_question", None)
       secret_question_answer = request.POST.get('secret_question_answer', None)
+      bitcoin_address = request.POST.get('bitcoin_address', None)
+      usdtc_address = request.POST.get('usdtc_address', None)
+      ethereum_address = request.POST.get('ethereum_address', None)
 
       user = request.user
       if username:
-         user.username = username
+         user.username = username.capitalize()
 
       if secret_question:
-         user.secret_question = secret_question
+         user.secret_question = secret_question.capitalize()
 
       if secret_question_answer:
          user.secret_question_answer = secret_question_answer
+
+      if bitcoin_address:
+         user.bitcoin_address = bitcoin_address
+
+      if usdtc_address:
+         user.usdtc_address = usdtc_address
+
+      if ethereum_address:
+         user.ethereum_address = ethereum_address
+
       
       user.save()
 
@@ -57,7 +70,7 @@ def userProfile(request):
    return render(request, 'account/profile.html', context)
 
 
-@login_required(redirect_field_name='next', login_url='/accounts/auth/login/')
+@login_required
 def deposit(request):
 
   if request.method == 'POST':

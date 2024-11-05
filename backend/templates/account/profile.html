@@ -91,15 +91,15 @@
         <div class="form-group row">
             <label for="btc-address" class="col-sm-3 col-form-label">Bitcoin Address</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="btc-address" value="1FzWLkYX9hnPjUwwgM8c1yzWEwF2ySABC">
+                <input type="text" class="form-control" id="btc-address" name="bitcoin_address" value="{{user.bitcoin_address}}">
             </div>
         </div>
 
         <!-- TRC20 Address (Editable) -->
         <div class="form-group row">
-            <label for="trc-address" class="col-sm-3 col-form-label">TRC20 Address</label>
+            <label for="usdtc-address" class="col-sm-3 col-form-label">TRC20 Address</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="trc-address" value="TX6ZZ2MA9fn8qfpqXH5QeTRJ7hHABC">
+                <input type="text" class="form-control" id="trc-address" name="usdtc_address" value="{{user.usdtc_address}}">
             </div>
         </div>
 
@@ -107,7 +107,7 @@
         <div class="form-group row">
             <label for="eth-address" class="col-sm-3 col-form-label">Ethereum Address</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="eth-address" value="0x1234abcd5678efghijkl">
+                <input type="text" class="form-control" id="eth-address" name="ethereum_address" value="{{user.ethereum_address}}">
             </div>
         </div>
 

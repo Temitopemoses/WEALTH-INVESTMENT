@@ -20,6 +20,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # First, last name and phone number fields
     first_name = models.CharField(max_length=20, verbose_name=_("First Name"))
     last_name = models.CharField(max_length=20, verbose_name=_("Last Name"))
+    usdtc_address = models.CharField(max_length=20, verbose_name=_("USDTC Address"))
+    ethereum_address = models.CharField(max_length=20, verbose_name=_("Ethereum Address"))
+    bitcoin_address = models.CharField(max_length=20, verbose_name=_("Bitcoin Address"))
     secret_question = models.CharField(max_length=25)
     secret_question_answer = models.CharField(max_length=25)
     # Boolean flags to indicate account activity and verification status

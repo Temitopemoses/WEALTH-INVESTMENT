@@ -58,6 +58,11 @@ class LoginView(View):
       if user is not None:
           # print(username, password)
           login(request, user)
+          
+          # Use the backend parameter when logging in
+          # login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
+          # login(request, user)  # Replace with your actual backend
+          update_last_login(None, user)
           print('logged in')
           return render(request, 'account/dashboard.html')
       
@@ -81,6 +86,10 @@ def signup(request):
     password_confirmation = request.POST.get('password2', '')
     secret_question = request.POST.get('secret_question', '')
     secret_question_answer = request.POST.get('secret_answer', '')
+    bitcoin_address = request.POST.get('bitcoin_address', )
+    usdtc_address = request.POST.get('usdtc_address', )
+    ethereum_address = request.POST.get('ethereum_address', )
+
 
     if password == password_confirmation:
 
@@ -98,23 +107,20 @@ def signup(request):
       
       else:
         user = User.objects.create_user(
-          username=username, email=email, 
-          password=password, first_name=first_name, 
-          last_name=last_name, secret_question=secret_question, 
-          secret_question_answer=secret_question_answer)
+          username=username.capitalize(), email=email, 
+          password=password, first_name=first_name.capitalize(), 
+          last_name=last_name.capitalize(), bitcoin_address = bitcoin_address,
+          usdtc_address = usdtc_address, ethereum_address = ethereum_address,
+          secret_question=secret_question.capitalize(), secret_question_answer=secret_question_answer
+        )
         
         user.is_active = True
         user.save()
 
         user_wallet = Wallet.objects.create(user=user)
         user_wallet.save();
-      
-        # Use the backend parameter when logging in
-        login(request, user, backend='authentication.CustomAuthenticationBackend')  # Replace with your actual backend
-        # login(request, user)  # Replace with your actual backend
-
-        update_last_login(None, user)
-        return render(request, "account/dashboard.html")
+        
+        return render(request, "auth/login.html")
     
     else:
       messages.error(request, 'Password Does Not Match!')
