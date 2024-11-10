@@ -187,10 +187,10 @@
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Total Balance</h5>
-                {% if wallet.balance == "0E-8" %}
-                    <p>$0.00</p>
-                {% else %}
+                {% if wallet %}
                     <p>${{wallet.balance}}</p>
+                {% else %}
+                    <p>$0.00</p>
                 {% endif %}
             </div>
         </div>
@@ -198,7 +198,7 @@
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Recent Deposits</h5>
-                <p>$0.00</p>
+                <p>{{balance}}</p>
             </div>
         </div>
         <!-- Example Card 3 -->

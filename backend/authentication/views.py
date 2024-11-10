@@ -52,7 +52,7 @@ class LoginView(View):
       username = request.POST.get('username', '')
       password = request.POST.get('password', '')
       # print(username, password)
-      user = authenticate(request, username=username, password=password)
+      user = authenticate(request, username=username.capitalize(), password=password)
       
       print(user)
       if user is not None:
@@ -64,7 +64,7 @@ class LoginView(View):
           # login(request, user)  # Replace with your actual backend
           update_last_login(None, user)
           print('logged in')
-          return render(request, 'account/dashboard.html')
+          redirect('dashboard')
       
       else:
           print('not logged in')

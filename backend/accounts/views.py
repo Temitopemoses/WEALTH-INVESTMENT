@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.shortcuts import render, redirect
 from coinbase_commerce.client import Client
+from coinbase.wallet.client import Client as WalletClient
 from .models import Transaction, Wallet, Cryptocurrency, User
 from django.utils import timezone
 from decimal import Decimal
@@ -15,6 +16,7 @@ from requests.exceptions import ConnectionError
 
 User = get_user_model()
 client = Client(api_key=settings.COINBASE_API_KEY)
+wallet_client = WalletClient(settings.COINBASE_API_KEY)
 print(settings.COINBASE_API_KEY)
 
 @login_required
@@ -23,7 +25,9 @@ def dashboard(request):
   user = request.user
   wallet = Wallet.objects.get(user=user)
   print(f"User acct balance ${wallet.balance}")
-  context = {wallet: "wallet"}
+  balance = str(wallet.balance)
+  print(balance)
+  context = {wallet: "wallet", balance: "balance"}
   return render(request, 'account/dashboard.html', context)
 
 
@@ -142,8 +146,57 @@ def transaction(request):
   return render(request, 'account/transaction.html', {"transactions": transactions})
 
 
+
+@login_required
 def withdraw(request):
-  return render(request, 'account/withdraw.html')
+    if request.method == 'POST':
+        amount = float(request.POST.get('amount'))
+        wallet_address = request.POST.get('wallet_address')
+        
+        try:
+            # user_wallet = Wallet.objects.get(user=request.user)
+            # if user_wallet.balance < amount:
+            #     messages.error(request, "Insufficient balance.")
+            #     return redirect('withdraw')
+
+            # Deduct balance first for immediate feedback; set transaction as pending
+            # user_wallet.balance -= decimal.Decimal(amount)
+            # user_wallet.save()
+
+            # Record the withdrawal transaction
+            transaction = Transaction.objects.create(
+                user=request.user,
+                transaction_type=Transaction.WITHDRAWAL,
+                amount=amount,
+                status="PENDING",
+                crypto=user_wallet.currency
+            )
+
+            # Initiate withdrawal via Coinbase API
+            withdrawal = wallet_client.send_money(
+                user_wallet.currency,
+                to=wallet_address,
+                amount=str(amount),
+                currency="BTC",  # Assuming BTC; adjust based on user's wallet currency
+                description="User withdrawal"
+            )
+
+            # Update transaction status based on API response
+            transaction.status = "COMPLETED" if withdrawal['status'] == 'completed' else "FAILED"
+            transaction.save()
+
+            messages.success(request, "Withdrawal initiated successfully.")
+            return redirect('withdraw')
+
+        except Exception as e:
+            # Rollback user balance if withdrawal fails
+            user_wallet.balance += decimal.Decimal(amount)
+            user_wallet.save()
+            print(f"Withdrawal error: {e}")
+            messages.error(request, "Failed to process withdrawal. Please try again later.")
+
+    return render(request, 'account/withdraw.html')
+
 
 
 def transfer(request):
