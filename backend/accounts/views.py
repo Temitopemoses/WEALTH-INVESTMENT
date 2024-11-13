@@ -11,12 +11,13 @@ from .models import Transaction, Wallet, Cryptocurrency, User
 from django.utils import timezone
 from decimal import Decimal
 from requests.exceptions import ConnectionError
+from django.core.mail import send_mail
 
 # Create your views here.
 
 User = get_user_model()
 client = Client(api_key=settings.COINBASE_API_KEY)
-wallet_client = WalletClient(settings.COINBASE_API_KEY)
+wallet_client = WalletClient(api_secret=settings.COINBASE_API_KEY, api_key=settings.COINBASE_API_KEY)
 print(settings.COINBASE_API_KEY)
 
 @login_required
@@ -66,7 +67,7 @@ def userProfile(request):
 
       type = 'success'
       context = {"type": type}
-      messages.error(request, 'Your profile has been updated successfully!')
+      messages.success(request, 'Your profile has been updated successfully!')
       return render(request, "account/profile.html", context=context)
 
    user = request.user
@@ -81,44 +82,106 @@ def deposit(request):
    amount = float(request.POST.get('amount'))
    plan = request.POST.get('plan', None)
    crypto = request.POST.get('crypto', None)
+   transaction_id = request.POST.get('transaction_id', None)
 
-   print(amount)
+   if transaction_id == None:
+      type = 'danger'
+      context = {"type": type}
+      messages.error(request, 'Please enter Transaction ID.')
+      return redirect('deposit')
+
+   if plan == None:
+      type = 'danger'
+      context = {"type": type}
+      messages.error(request, 'Please select a Plan.')
+      return redirect('deposit')
+   
+   if transaction_id is not None and Transaction.objects.filter(transaction_id=transaction_id).exists():
+      type = 'danger'
+      context = {"type": type}
+      messages.error(request, 'Oops!. A transaction with the transaction ID provided already exists. Please check again or try again later after 1 hour')
+      return redirect('deposit')
+
 
    company_name = "Wealth Wise Investments"
    
-   crypto_instance = Cryptocurrency.objects.get(symbol=crypto)  # Replace with the actual crypto selected by user
    try:
-
-      charge_data = {
-         'name': f"Investment Deposit for {plan}",
-         'description': f"Crypto investment deposit for your {plan} on {request.META['REMOTE_ADDR']}",
-         'local_price': {
-               'amount': str(amount),  # Convert Decimal to string
-               'currency': 'USD'  # Assuming payment in USD; update if dynamic currency needed
-         },
-         'pricing_type': 'fixed_price'
-      }
-      charge = client.charge.create(**charge_data)
-
+      crypto_instance = Cryptocurrency.objects.get(symbol=crypto)  # Replace with the actual crypto selected by user
       # Create Transaction with charge_id
       transaction = Transaction.objects.create(
          user=request.user,
          crypto=crypto_instance,
          transaction_type=Transaction.DEPOSIT,
          amount=amount,
+         plan=plan,
          status=Transaction.PENDING,
-         charge_id=charge['id'],  # Store Coinbase charge ID
-         payment_id=charge['id']
+         transaction_id=transaction_id
       )
 
-      return redirect(charge['hosted_url'])
+      # Send email to admin for manual verification
+      admin_email = settings.ADMIN_EMAIL 
+      print(admin_email)
+      subject = f"New Deposit Request for Manual Verification - {company_name}"
+      message = (f"User: {request.user.username}\n"
+                  f"Email: {request.user.email}\n"
+                  f"Plan: {plan}\n"
+                  f"Amount: ${amount}\n"
+                  f"Transaction ID: {transaction_id}\n\n"
+                  f"Please verify the transaction ID and update the status here http://127.0.0.1:8000/admin/accounts/transaction/.")
+
+      send_mail(
+         subject,
+         message,
+         settings.DEFAULT_FROM_EMAIL,
+         admin_email,
+         fail_silently=False,
+      )
+
+      type = 'info'
+      context = {"type": type}
+      messages.success(request, 'Your deposit request has been submitted for verification. You will be notified once it is confirmed.')
+      return render(request, 'account/deposit.html')
    
    except Exception as e:
       print(f"Error creating charge: {e}")
-      messages.error(request, 'Failed to initiate deposit. Please try again later.')
+      messages.error(request, f'Failed to initiate deposit. {e} Please try again later.')
       type = 'danger'
       context = {"type": type}
       return render(request, 'account/deposit.html', context)
+
+
+   # try:
+
+   #    charge_data = {
+   #       'name': f"Investment Deposit for {plan}",
+   #       'description': f"Crypto investment deposit for your {plan} on {request.META['REMOTE_ADDR']}",
+   #       'local_price': {
+   #             'amount': str(amount),  # Convert Decimal to string
+   #             'currency': 'USD'  # Assuming payment in USD; update if dynamic currency needed
+   #       },
+   #       'pricing_type': 'fixed_price'
+   #    }
+   #    charge = client.charge.create(**charge_data)
+
+   #    # Create Transaction with charge_id
+   #    transaction = Transaction.objects.create(
+   #       user=request.user,
+   #       crypto=crypto_instance,
+   #       transaction_type=Transaction.DEPOSIT,
+   #       amount=amount,
+   #       status=Transaction.PENDING,
+   #       charge_id=charge['id'],  # Store Coinbase charge ID
+   #       payment_id=charge['id']
+   #    )
+
+   #    return redirect(charge['hosted_url'])
+   
+   # except Exception as e:
+   #    print(f"Error creating charge: {e}")
+   #    messages.error(request, 'Failed to initiate deposit. Please try again later.')
+   #    type = 'danger'
+   #    context = {"type": type}
+   #    return render(request, 'account/deposit.html', context)
 
   return render(request, 'account/deposit.html')
 
@@ -169,12 +232,12 @@ def withdraw(request):
                 transaction_type=Transaction.WITHDRAWAL,
                 amount=amount,
                 status="PENDING",
-                crypto=user_wallet.currency
+               #  crypto=user_wallet.currency
             )
 
             # Initiate withdrawal via Coinbase API
             withdrawal = wallet_client.send_money(
-                user_wallet.currency,
+               #  user_wallet.currency,
                 to=wallet_address,
                 amount=str(amount),
                 currency="BTC",  # Assuming BTC; adjust based on user's wallet currency
@@ -190,8 +253,8 @@ def withdraw(request):
 
         except Exception as e:
             # Rollback user balance if withdrawal fails
-            user_wallet.balance += decimal.Decimal(amount)
-            user_wallet.save()
+            # user_wallet.balance += decimal.Decimal(amount)
+            # user_wallet.save()
             print(f"Withdrawal error: {e}")
             messages.error(request, "Failed to process withdrawal. Please try again later.")
 

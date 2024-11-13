@@ -186,8 +186,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Make Deposit</h3>
-                    <p class="card-description"><small>Fill the form below</small></p>
+
                     <div class="container">
                         {% if messages %}
                         <div class="alert alert-{{type}} alert-dismissible" role="alert">
@@ -202,24 +201,32 @@
                         </div>
                         {% endif %}
                     </div>
+
+                    <h3 class="card-title">Make Deposit</h3>
+
+                    <p class="card-description"><small>Complete your payment with this BTC (Bitcoin) wallet below: <strong>bc1qkm35d92hue6lazxpekc2g6ugut9ss5n26gf4e</strong></small></p>
+                    <div class="container">
+                        <img class="qrcode-img" src="{% static "img/wallet_address_qrcode.jpg" %}" alt="wallet address" height="20%" width="20%">
+                    </div>
+                    <br />
                     
                     <form method="POST" action="{% url "deposit" %}" name="spendform" class="forms-sample">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label class="form-label">Choose Plan: <span class="tx-danger">*</span></label>
-                            <select name="" class="form-select">
+                            <select name="plan" class="form-select">
                                 <option value="">Choose Plan</option>
-                                <option value="1">Meta Trade Account</option>
-                                <option value="2">Stock Market Account</option>
-                                <option value="3">Real Estate Account</option>
-                                <option value="4">Contract Account</option>
-                                <option value="5">Retirement Account</option>
+                                <option value="Meta Trade Account">Meta Trade Account</option>
+                                <option value="Stock Market Account">Stock Market Account</option>
+                                <option value="Real Estate Account">Real Estate Account</option>
+                                <option value="Contract Account">Contract Account</option>
+                                <option value="Retirement Account">Retirement Account</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Enter Amount: <span class="tx-danger">*</span></label>
-                            <input type="text" name="amount" placeholder="30.00" class="form-control">
+                            <input type="text" name="amount" placeholder="30.00" required class="form-control">
                         </div>
 
                         <div class="mb-3">
@@ -236,6 +243,16 @@
                                 <input class="form-check-input" type="radio" name="crypto" value="TRC20">
                                 <label class="form-check-label">USDT (TRC20)</label>
                             </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Deposit Fee <span class="tx-danger">*</span></label>
+                            <input type="text" name="deposit_fee" placeholder="0.00% + $0.00 (min. $0.00 max. $0.00)" disabled class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Transaction ID: <span class="tx-danger">*</span></label>
+                            <input type="text" name="transaction_id" placeholder="" class="form-control" required>
                         </div>
 
                         <button class="btn btn-success btn-long" type="submit">Pay with Crypto</button>

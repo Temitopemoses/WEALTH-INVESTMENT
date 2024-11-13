@@ -152,6 +152,8 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = 'MyWealthInvesments'
 
+ADMIN_EMAIL = ["wealthinvesments@mail.com"]
+
 COINBASE_API_KEY = config("COINBASE_API_KEY")
 
 

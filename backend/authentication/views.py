@@ -64,7 +64,7 @@ class LoginView(View):
           # login(request, user)  # Replace with your actual backend
           update_last_login(None, user)
           print('logged in')
-          redirect('dashboard')
+          return redirect('dashboard')
       
       else:
           print('not logged in')
@@ -120,7 +120,7 @@ def signup(request):
         user_wallet = Wallet.objects.create(user=user)
         user_wallet.save();
         
-        return render(request, "auth/login.html")
+        return redirect('login')
     
     else:
       messages.error(request, 'Password Does Not Match!')

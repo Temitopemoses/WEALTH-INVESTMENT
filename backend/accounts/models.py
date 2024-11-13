@@ -92,9 +92,9 @@ class Transaction(models.Model):
         (WITHDRAWAL, 'Withdrawal'),
     ]
     
-    PENDING = 'pending'
-    SUCCESS = 'success'
-    FAILED = 'failed'
+    PENDING = 'Pending'
+    SUCCESS = 'Success'
+    FAILED = 'Failed'
     STATUS_CHOICES = [
         (PENDING, 'Pending'),
         (SUCCESS, 'Success'),
@@ -102,17 +102,19 @@ class Transaction(models.Model):
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    charge_id = models.CharField(max_length=100, null=True, blank=True)  # Store Coinbase charge ID
+    # charge_id = models.CharField(max_length=100, null=True, blank=True)  # Store Coinbase charge ID
     crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)  # 'BTC' or 'USDT'
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     amount = models.DecimalField(max_digits=20, decimal_places=3)
+    plan = models.CharField(max_length=100)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
     timestamp = models.DateTimeField(auto_now_add=True)
-    payment_id = models.CharField(max_length=100, null=True, blank=True)  # Store payment provider's ID
+    transaction_id = models.CharField(max_length=64, unique=True) # Store payment provider's ID
+    # payment_id = models.CharField(max_length=100, null=True, blank=True)  # Store payment provider's ID
 
 
     def __str__(self):
-        return f"{self.payment_id}"
+        return f"{self.user} - {self.transaction_type} - {self.status}"
     
     class Meta:
         ordering = ('-timestamp',)
