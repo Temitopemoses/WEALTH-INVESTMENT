@@ -88,66 +88,98 @@ def deposit(request):
       type = 'danger'
       context = {"type": type}
       messages.error(request, 'Please enter Transaction ID.')
-      return redirect('deposit')
+      return render(request, 'account/deposit.html', context)
 
    if plan == None:
       type = 'danger'
       context = {"type": type}
       messages.error(request, 'Please select a Plan.')
-      return redirect('deposit')
+      return render(request, 'account/deposit.html', context)
    
    if transaction_id is not None and Transaction.objects.filter(transaction_id=transaction_id).exists():
       type = 'danger'
       context = {"type": type}
       messages.error(request, 'Oops!. A transaction with the transaction ID provided already exists. Please check again or try again later after 1 hour')
-      return redirect('deposit')
+      return render(request, 'account/deposit.html', context)
 
 
    company_name = "Wealth Wise Investments"
    
    try:
-      crypto_instance = Cryptocurrency.objects.get(symbol=crypto)  # Replace with the actual crypto selected by user
-      # Create Transaction with charge_id
-      transaction = Transaction.objects.create(
-         user=request.user,
-         crypto=crypto_instance,
-         transaction_type=Transaction.DEPOSIT,
-         amount=amount,
-         plan=plan,
-         status=Transaction.PENDING,
-         transaction_id=transaction_id
-      )
+    # Backend-related operations: crypto instance retrieval and transaction creation
+    crypto_instance = Cryptocurrency.objects.get(symbol=crypto)  # Replace with the actual crypto selected by user
+    
+    # Create Transaction with charge_id
+    transaction = Transaction.objects.create(
+        user=request.user,
+        crypto=crypto_instance,
+        transaction_type=Transaction.DEPOSIT,
+        amount=amount,
+        plan=plan,
+        status=Transaction.PENDING,
+        transaction_id=transaction_id
+    )
 
-      # Send email to admin for manual verification
-      admin_email = settings.ADMIN_EMAIL 
-      print(admin_email)
-      subject = f"New Deposit Request for Manual Verification - {company_name}"
-      message = (f"User: {request.user.username}\n"
-                  f"Email: {request.user.email}\n"
-                  f"Plan: {plan}\n"
-                  f"Amount: ${amount}\n"
-                  f"Transaction ID: {transaction_id}\n\n"
-                  f"Please verify the transaction ID and update the status here http://127.0.0.1:8000/admin/accounts/transaction/.")
+    # Send email to admin for manual verification
+    try:
+        admin_email = settings.ADMIN_EMAIL
+        print(admin_email)
+        subject = f"New Deposit Request for {plan} Plan - {company_name}"
+        message = (f"User: {request.user.username}\n"
+                   f"Email: {request.user.email}\n"
+                   f"Plan: {plan}\n"
+                   f"Amount: ${amount}\n"
+                   f"Transaction ID: {transaction_id}\n\n"
+                   f"Crypto: {crypto}\n"
+                   f"Transaction ID: {transaction_id}\n\n"
+                   f"Please verify the transaction ID and update the status here: "
+                   f"http://127.0.0.1:8000/admin/accounts/transaction/.")
 
-      send_mail(
-         subject,
-         message,
-         settings.DEFAULT_FROM_EMAIL,
-         admin_email,
-         fail_silently=False,
-      )
+        # Attempt to send the email
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [admin_email],  # Pass as a list to ensure correct format
+            fail_silently=False,
+        )
+    except Exception as email_error:
+        # Handle email sending errors specifically
+        print(f"Error sending email: {email_error}")
+        type = 'info'
+        context = {"type": type}
+        messages.warning(
+            request, 
+            'Your deposit request was submitted, but the notification email could not be sent. Please contact support admin@mywealthwiseinvest.com.'
+        )
+        return render(request, 'account/deposit.html', context)
 
-      type = 'info'
-      context = {"type": type}
-      messages.success(request, 'Your deposit request has been submitted for verification. You will be notified once it is confirmed.')
-      return render(request, 'account/deposit.html')
-   
-   except Exception as e:
-      print(f"Error creating charge: {e}")
-      messages.error(request, f'Failed to initiate deposit. {e} Please try again later.')
+
+    # If everything succeeds, notify the user
+    type = 'info'
+    context = {"type": type}
+    messages.success(
+        request, 
+        'Your deposit request has been submitted for verification. You will be notified once it is confirmed.'
+    )
+    return render(request, 'account/deposit.html', context)
+
+   except Cryptocurrency.DoesNotExist:
+      # Handle error if the crypto symbol does not exist
+      print("Crypto symbol not found.")
+      messages.error(request, 'The selected cryptocurrency does not exist. Please try again.')
       type = 'danger'
       context = {"type": type}
       return render(request, 'account/deposit.html', context)
+
+   except Exception as backend_error:
+      # Handle any other backend-related errors
+      print(f"Error creating charge: {backend_error}")
+      messages.error(request, f'Failed to initiate deposit. {backend_error}. Please try again later.')
+      type = 'danger'
+      context = {"type": type}
+      return render(request, 'account/deposit.html', context)
+
 
 
    # try:

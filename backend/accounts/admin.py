@@ -25,7 +25,35 @@ from .models import User, Cryptocurrency, Transaction, Wallet
 #     filter_horizontal = ()
 
 # custom_admin_site = CustomAdminSite(name='custom_admin')
+
+
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'amount', 'plan', 'crypto', 'status', 'transaction_id', 'timestamp')
+    list_filter = ('status', 'plan', 'crypto')
+    search_fields = ('user_username', 'transaction_id')
+    actions = ['mark_as_confirmed', 'mark_as_failed']
+
+    # Action to mark transactions as confirmed
+    def mark_as_confirmed(self, request, queryset):
+        queryset.update(status='SUCCESS')
+        for transaction in queryset:
+            if transaction.status == 'SUCCESS':
+                transaction.user.wallet_balance += transaction.amount
+                transaction.user.save()
+        self.message_user(request, "Selected transactions have been marked as confirmed.")
+
+
+    # Action to mark transactions as failed
+    def mark_as_failed(self, request, queryset):
+        queryset.update(status='FAILED')
+        self.message_user(request, "Selected transactions have been marked as failed.")
+
+    mark_as_confirmed.short_description = "Mark selected transactions as Confirmed"
+    mark_as_failed.short_description = "Mark selected transactions as Failed"
+
+admin.site.register(Transaction, TransactionAdmin)
+
+
 admin.site.register(User)
 admin.site.register(Cryptocurrency)
-admin.site.register(Transaction)
 admin.site.register(Wallet)

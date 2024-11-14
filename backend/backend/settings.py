@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com", "mywealthwiseinvest.com"]
 
 
 # Application definition
@@ -87,6 +87,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'username$db_name',          # Your PythonAnywhere database name
+#         'USER': 'username',                  # Your PythonAnywhere username
+#         'PASSWORD': 'your_password_here',    # Your MySQL database password
+#         'HOST': 'username.mysql.pythonanywhere-services.com',  # Host
+#         'PORT': '3306',                      # Default MySQL port
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -143,16 +154,26 @@ CELERY_BEAT_SCHEDULE = {
 
 # settings.py
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = config("EMAIL_PORT")
-# EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
-# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = 'MyWealthInvesments'
+# # EMAIL_HOST = 'smtp.gmail.com'
+# # EMAIL_PORT = config("EMAIL_PORT")
+# # EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+# # EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = 'MyWealthInvesments'
 
-ADMIN_EMAIL = ["wealthinvesments@mail.com"]
+# Email settings for Zoho Mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")  # Your Zoho Mail email address
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")  # Your Zoho Mail password or app-specific password
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")  # The default from email address
+
+
+ADMIN_EMAIL = ["admin@mywealthwiseinvest.com"]
 
 COINBASE_API_KEY = config("COINBASE_API_KEY")
 
