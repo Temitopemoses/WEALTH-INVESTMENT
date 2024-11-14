@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'username$db_name',          # Your PythonAnywhere database name
-#         'USER': 'username',                  # Your PythonAnywhere username
-#         'PASSWORD': 'your_password_here',    # Your MySQL database password
-#         'HOST': 'username.mysql.pythonanywhere-services.com',  # Host
-#         'PORT': '3306',                      # Default MySQL port
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': config('DATABASE_ENGINE'),
+        'NAME': config('DATABASE_NAME'),          # Your PythonAnywhere database name
+        'USER': config("DATABASE_USER"),                  # Your PythonAnywhere username
+        'PASSWORD': config('DATABASE_PASSWORD'),    # Your MySQL database password
+        'HOST': config("DATABASE_HOST"),  # Host
+        'PORT': '3306',                      # Default MySQL port
+    }
+}
 
 
 # Password validation
