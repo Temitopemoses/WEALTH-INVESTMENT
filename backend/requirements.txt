@@ -12,8 +12,10 @@ coinbase==2.1.0
 coinbase-commerce==1.0.1
 colorama==0.4.6
 Django==5.1.1
+hiredis==3.0.0
 idna==3.10
 kombu==5.4.2
+mysqlclient==2.2.6
 prompt_toolkit==3.0.48
 pycryptodome==3.21.0
 python-dateutil==2.9.0.post0

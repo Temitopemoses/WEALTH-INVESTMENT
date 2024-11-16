@@ -31,10 +31,10 @@ from django.contrib import messages
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'amount', 'plan', 'crypto', 'status', 'transaction_id', 'timestamp')
+    list_display = ('user', 'amount', 'transaction_type', 'plan', 'crypto', 'status', 'transaction_id', 'timestamp')
     list_filter = ('status', 'plan', 'crypto')
     search_fields = ('user_username', 'transaction_id')
-    actions = ['mark_as_confirmed', 'mark_as_failed']
+    actions = ['mark_as_confirmed', 'mark_as_failed', "approve_withdrawals"]
 
     # Action to mark transactions as confirmed
     def mark_as_confirmed(self, request, queryset):
@@ -43,7 +43,7 @@ class TransactionAdmin(admin.ModelAdmin):
             queryset.update(status='SUCCESS')
             for transaction in queryset:
                 if transaction.status == 'SUCCESS':
-                    wallet = transaction.user.wallet_set.filter(crypto=transaction.crypto).first()
+                    # wallet = transaction.user.wallet_set.filter(crypto=transaction.crypto).first()
                     user = transaction.user
                     print(user)
                     wallet = Wallet.objects.get(user=user)
@@ -75,7 +75,70 @@ class TransactionAdmin(admin.ModelAdmin):
     # Action to mark transactions as failed
     def mark_as_failed(self, request, queryset):
         queryset.update(status='FAILED')
-        self.message_user(request, "Selected transactions have been marked as failed.")
+
+        # Send email notifications to users
+        for transaction in queryset:
+            user = transaction.user
+            subject = f"Transaction Failed - {transaction.crypto.symbol}"
+            message = (
+                f"Dear {user.get_full_name},\n\n"
+                f"We regret to inform you that your transaction with the following details has failed:\n\n"
+                f"Transaction ID: {transaction.transaction_id}\n"
+                f"Crypto: {transaction.crypto.name}\n"
+                f"Amount: ${transaction.amount}\n"
+                f"Plan: {transaction.plan if transaction.plan else 'N/A'}\n\n"
+                f"If you have any questions or need further assistance, please contact our support team admin@mywealthwiseinvest.com.\n\n"
+                f"Best regards,\n{settings.COMPANY_NAME} Team"
+            )
+
+            # Send the email
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=True,
+            )
+        
+        self.message_user(request, "Selected transactions have been marked as failed and users have been notified.")
+        # self.message_user(request, "Selected transactions have been marked as failed.")
+
+    @admin.action(description='Approve selected withdrawals')
+    def approve_withdrawals(modeladmin, request, queryset):
+        """Admin action to approve selected withdrawals."""
+        try:
+            for transaction in queryset:
+                if transaction.transaction_type == Transaction.WITHDRAWAL and transaction.status == Transaction.PENDING:
+                    # Update transaction to 'SUCCESS'
+                    transaction.status = Transaction.SUCCESS
+                    transaction.save()
+
+                    # Deduct the amount from the user's wallet
+                    # wallet = transaction.user.get_wallet_for_crypto(transaction.crypto)
+                    wallet = Wallet.objects.get(user=transaction.user)
+                    if wallet and wallet.balance >= transaction.amount:
+                        wallet.balance -= transaction.amount
+                        wallet.save()
+
+                        # Notify user about withdrawal approval
+                        subject = f"Withdrawal Approved - {transaction.crypto.symbol}"
+                        message = (f"Dear {transaction.user.get_full_name},\n\n"
+                                f"Your withdrawal of ${transaction.amount} in {transaction.crypto.name} "
+                                f"has been approved.\n\n"
+                                f"Thank you for using our service.\n\n"
+                                f"Best regards,\n{settings.COMPANY_NAME} Team")
+
+                        send_mail(
+                            subject,
+                            message,
+                            settings.DEFAULT_FROM_EMAIL,
+                            [transaction.user.email],
+                            fail_silently=True,
+                        )
+            modeladmin.message_user(request, "Selected withdrawals have been approved.")
+        
+        except Exception as e:
+            modeladmin.message_user(request, f"Error while approving withdrawals: {str(e)}", level='error')
 
     mark_as_confirmed.short_description = "Mark selected transactions as Confirmed"
     mark_as_failed.short_description = "Mark selected transactions as Failed"

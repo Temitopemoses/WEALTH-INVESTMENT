@@ -141,13 +141,17 @@ AUTHENTICATION_BACKENDS = [
 
 
 # Celery configuration
-CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+# CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+# CELERY_RESULT_BACKEND = config("CELERY_BROKER_URL")
+
+CELERY_BROKER_URL='redis://:yKlVkKdFbCQceLf3wk0QZ0afA7a719fu@redis-10915.c257.us-east-1-3.ec2.redns.redis-cloud.com:10915/0'
+CELERY_RESULT_BACKEND='redis://:yKlVkKdFbCQceLf3wk0QZ0afA7a719fu@redis-10915.c257.us-east-1-3.ec2.redns.redis-cloud.com:10915/0'
 
 # Celery Beat settings
 CELERY_BEAT_SCHEDULE = {
     'fetch-crypto-prices-every-5-minutes': {
         'task': 'accounts.tasks.fetch_crypto_prices_task',
-        'schedule': 300.0,  # Every 5 minutes
+        'schedule': 120.0,  # Every 5 minutes
     },
 }
 
@@ -173,7 +177,7 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")  # Your Zoho Mail password o
 DEFAULT_FROM_EMAIL = "admin@mywealthwiseinvest.com"  # The default from email address
 
 
-ADMIN_EMAIL = ["admin@mywealthwiseinvest.com"]
+ADMIN_EMAIL = "admin@mywealthwiseinvest.com"
 COMPANY_NAME = 'MyWealthWise Investments'
 
 COINBASE_API_KEY = config("COINBASE_API_KEY")

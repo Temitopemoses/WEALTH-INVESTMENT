@@ -105,7 +105,7 @@ class Transaction(models.Model):
     # charge_id = models.CharField(max_length=100, null=True, blank=True)  # Store Coinbase charge ID
     crypto = models.ForeignKey(Cryptocurrency, on_delete=models.CASCADE)  # 'BTC' or 'USDT'
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
-    amount = models.DecimalField(max_digits=20, decimal_places=3)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)
     plan = models.CharField(max_length=100)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
     timestamp = models.DateTimeField(auto_now_add=True)

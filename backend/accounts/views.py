@@ -18,7 +18,12 @@ from django.core.mail import send_mail
 User = get_user_model()
 client = Client(api_key=settings.COINBASE_API_KEY)
 wallet_client = WalletClient(api_secret=settings.COINBASE_API_KEY, api_key=settings.COINBASE_API_KEY)
-print(settings.COINBASE_API_KEY)
+
+import uuid
+
+def generate_transaction_id():
+    return str(uuid.uuid4())
+
 
 @login_required
 def dashboard(request):
@@ -27,18 +32,21 @@ def dashboard(request):
     balance = str(wallet.balance)
 
     recent_deposit = Transaction.objects.filter(transaction_type=Transaction.DEPOSIT, user=user).order_by('-timestamp').first()
+    recent_withdrawal = Transaction.objects.filter(transaction_type=Transaction.WITHDRAWAL, user=user).order_by('-timestamp').first()
     
     # Handle case when there might not be any deposit
-    if recent_deposit:
+    if recent_deposit and recent_withdrawal:
         deposit_amount = recent_deposit.amount
+        withdrawal_amount = recent_withdrawal.amount
     else:
         deposit_amount = 0.00
+        withdrawal_amount = 0.00
     
     # Correct the context dictionary
     context = {
         "wallet": wallet,
         "balance": str(wallet.balance),
-        "recent_deposit": recent_deposit,
+        "withdrawal_amount": withdrawal_amount,
         "deposit_amount": deposit_amount,
     }
     
@@ -170,7 +178,7 @@ def deposit(request):
 
 
     # If everything succeeds, notify the user
-    type = 'info'
+    type = 'success'
     context = {"type": type}
     messages.success(
         request, 
@@ -258,53 +266,90 @@ def transaction(request):
 
 @login_required
 def withdraw(request):
+    
     if request.method == 'POST':
         amount = float(request.POST.get('amount'))
+        currency = request.POST.get('currency')
         wallet_address = request.POST.get('wallet_address')
         
         try:
-            # user_wallet = Wallet.objects.get(user=request.user)
-            # if user_wallet.balance < amount:
-            #     messages.error(request, "Insufficient balance.")
-            #     return redirect('withdraw')
+            crypto_instance = Cryptocurrency.objects.get(symbol=currency)
+            user_wallet = Wallet.objects.get(user=request.user)
+
+            if user_wallet.balance <= amount:
+                messages.error(request, "Insufficient balance.")
+                type = 'danger'
+                context = {"type": type}
+                return render(request, 'account/withdraw.html', context)
 
             # Deduct balance first for immediate feedback; set transaction as pending
-            # user_wallet.balance -= decimal.Decimal(amount)
+            transaction_id = generate_transaction_id()  # Use a custom function to generate a unique transaction ID
+            # user_wallet.balance -= amount
             # user_wallet.save()
 
             # Record the withdrawal transaction
+            # Create a withdrawal transaction (pending approval)
             transaction = Transaction.objects.create(
-                user=request.user,
-                transaction_type=Transaction.WITHDRAWAL,
-                amount=amount,
-                status="PENDING",
-               #  crypto=user_wallet.currency
+               user=request.user,
+               crypto=crypto_instance,
+               transaction_type=Transaction.WITHDRAWAL,
+               amount=amount,
+               status=Transaction.PENDING,
+               transaction_id=transaction_id
             )
 
-            # Initiate withdrawal via Coinbase API
-            withdrawal = wallet_client.send_money(
-               #  user_wallet.currency,
-                to=wallet_address,
-                amount=str(amount),
-                currency="BTC",  # Assuming BTC; adjust based on user's wallet currency
-                description="User withdrawal"
+            # Notify the admin via email
+            admin_email = settings.ADMIN_EMAIL
+            subject = f"Withdrawal Request - {request.user.username} | {settings.COMPANY_NAME}"
+            message = (f"User: {request.user.username}\n"
+                     f"Email: {request.user.email}\n"
+                     f"Crypto: {currency}\n"
+                     f"Amount: ${amount}\n"
+                     f"Wallet Address: ${wallet_address}\n"
+                     f"Transaction ID: {transaction_id}\n\n"
+                     f"Please review and confirm this withdrawal request.")
+
+            send_mail(
+               subject,
+               message,
+               settings.DEFAULT_FROM_EMAIL,
+               [admin_email],
+               fail_silently=False,
             )
-
-            # Update transaction status based on API response
-            transaction.status = "COMPLETED" if withdrawal['status'] == 'completed' else "FAILED"
-            transaction.save()
-
-            messages.success(request, "Withdrawal initiated successfully.")
-            return redirect('withdraw')
+            messages.success(request, 'Your withdrawal request has been submitted for approval.')
+            type = 'success'
+            context = {"type": type}
+            return render(request, 'account/withdraw.html', context)
 
         except Exception as e:
             # Rollback user balance if withdrawal fails
             # user_wallet.balance += decimal.Decimal(amount)
             # user_wallet.save()
             print(f"Withdrawal error: {e}")
+            type = 'danger'
+            context = {"type": type}
             messages.error(request, "Failed to process withdrawal. Please try again later.")
 
-    return render(request, 'account/withdraw.html')
+
+    wallet = Wallet.objects.get(user=request.user)
+    recent_withdrawal = Transaction.objects.filter(transaction_type=Transaction.WITHDRAWAL, user=request.user).order_by('-timestamp').first()
+
+    # Handle case when there might not be any deposit
+    if wallet and recent_withdrawal:
+        wallet_balance = wallet.balance
+        withdrawal_amount = recent_withdrawal.amount
+    else:
+        wallet_balance = 0.00
+        withdrawal_amount = 0.00
+    
+    # Correct the context dictionary
+    context = {
+        "wallet": wallet,
+        "wallet_balance": str(wallet_balance),
+        "withdrawal_amount": withdrawal_amount,
+    }
+
+    return render(request, 'account/withdraw.html', context)
 
 
 
