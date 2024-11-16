@@ -16,6 +16,7 @@ import string
 from django.contrib.auth.hashers import make_password
 
 from accounts.models import Wallet
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -41,6 +42,45 @@ class Policy(View):
 class Support(View):
   def get(self, request):
     return render(request, 'support.html')
+  
+  def post(self, request):
+     
+     name = request.POST.get("name", None)
+     email = request.POST.get("email", None)
+     subject = request.POST.get("subject", None)
+     message = request.POST.get("message", None)
+
+     print(name, email, subject, message)
+     
+     try:
+        company_name = "Wealth Wise Investments"
+        subject = f"New Message from {name} from your contact support page - {company_name}"
+        message = (f"Sender Name: {name}\n"
+                   f"Email: {email}\n"
+                   f"Subject: {subject}\n\n"
+                   f"Message: {message}\n")
+        
+        # Attempt to send the email
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],  # Pass as a list to ensure correct format
+            fail_silently=False,
+        )
+        
+     except Exception as email_error:
+        # Handle email sending errors specifically
+        print(f"Error sending email: {email_error}")
+        type = 'info'
+        context = {"type": type}
+        messages.warning(
+            request, 
+            'Your message request was submitted, but the notification email could not be sent. Please contact support admin@mywealthwiseinvest.com.'
+        )
+        return render(request, 'support.html', context)
+
+     return (request, 'support.html')
 
 class LoginView(View):
 

@@ -190,18 +190,13 @@
                 <div class="card-body">
                     <h3 class="card-title">Ask for withdrawal</h3>
                     <div class="table-responsive">
-                        <form method="post">
-                            <input type="hidden" name="form_id" value="17261203339162">
-                            <input type="hidden" name="form_token" value="db908383208a6cefe98e4809b120bfe2">
-                            <input type="hidden" name="a" value="withdraw">
-                            <input type="hidden" name="action" value="preview">
-                            <input type="hidden" name="say" value="">
+                        <form method="post" action="{% url 'withdrawal' %}">
     
                             <table class="table table-hover table-striped">
                                 <tbody>
                                     <tr>
                                         <td>Account Balance:</td>
-                                        <td>$<b>0.00</b></td>
+                                        <td>$<b>{{wallet.balance}}</b></td>
                                     </tr>
                                     <tr>
                                         <td>Pending Withdrawals:</td>
@@ -280,8 +275,8 @@
                                 </div>
                             </div>
     
-                            <br><br>
-                            <p>You have no funds to withdraw.</p>
+                            {% comment %} <br><br>
+                            <p>You have no funds to withdraw.</p> {% endcomment %}
                         </form>
                     </div>
                 </div>

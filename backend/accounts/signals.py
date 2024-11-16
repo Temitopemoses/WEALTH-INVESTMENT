@@ -18,7 +18,14 @@ def send_login_notification(sender, request, user, **kwargs):
     subject = "New Login Notification"
     
     # Get the IP address from the request
-    ip_address = request.META.get('REMOTE_ADDR')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    # print(x_forwarded_for)
+    if x_forwarded_for:
+        ip_address = x_forwarded_for.split(',')[0]  # The first IP is usually the client's
+        # print(ip_address)
+    else:
+        ip_address = request.META.get('REMOTE_ADDR')  # Fallback to REMOTE_ADDR if no proxy is used
+        # print(ip_address)
     
     # Get the user agent from the request
     user_agent = request.META.get('HTTP_USER_AGENT')
@@ -80,7 +87,7 @@ def send_login_notification(sender, request, user, **kwargs):
     
     support_title = "🤝 Need Help?"
     support_content = (
-        f"If you did not attempt to sign in to your account, your password may be compromised. Visit https://wealthwiseinvestments.com/accounts/auth/password-reset-request/ to create a new, strong password for your Apere account.\n\n"
+        f"If you did not attempt to sign in to your account, your password may be compromised. Visit https://www.mywealthwiseinvest.com/accounts/auth/password-reset-request/ to create a new, strong password for your Apere account.\n\n"
         f"If you'd like to automatically verify devices in the future, consider enabling two-factor authentication on your account. Visit https://docs.wealthwiseinvestments.com/articles/configuring-two-factor-authentication to learn about two-factor authentication."
     )
     
@@ -125,15 +132,16 @@ def send_login_notification(sender, request, user, **kwargs):
 
 def get_location_info(ip_address):
     try:
-        print("Got here!")
-        response = requests.get(f"https://ipinfo.io/{ip_address}/json")
+        response = requests.get(f"https://ipinfo.io/api/{ip_address}?access_key={config('IPINFO_ACCESS_TOKEN')}")
         # response = requests.get(f"https://api.ipstack.com/{ip_address}?access_key={config('IPSTACK_ACCESS_TOKEN')}/")
         print(f"This is the response body ==> {response}, {response.json()}")
         data = response.json()
-        print("Got here!!!!")
-        location = data.get("city", "Unknown City") + ", " + data.get("region", "Unknown Region") + ", " + data.get("country", "Unknown Country")
-        print("Got here too!")
+        location = str(data.get("city", "Unknown City")) + ", " + str(data.get("region_name", "Unknown Region")) + ", " + str(data.get("country_name", "Unknown Country"))
+        if location == "None, None, None":
+            location = "Unknown Location"
+            return  location
         return location
+    
     except Exception as e:
         return "Unknown Location"
 

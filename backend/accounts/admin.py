@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Cryptocurrency, Transaction, Wallet
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 # class CustomAdminSite(AdminSite):
 #     # login_form = CustomAdminAuthenticationForm
@@ -35,13 +38,39 @@ class TransactionAdmin(admin.ModelAdmin):
 
     # Action to mark transactions as confirmed
     def mark_as_confirmed(self, request, queryset):
-        queryset.update(status='SUCCESS')
-        for transaction in queryset:
-            if transaction.status == 'SUCCESS':
-                transaction.user.wallet_balance += transaction.amount
-                transaction.user.save()
-        self.message_user(request, "Selected transactions have been marked as confirmed.")
+        """Admin action to mark selected transactions as confirmed and update the user's wallet balance."""
+        try:
+            queryset.update(status='SUCCESS')
+            for transaction in queryset:
+                if transaction.status == 'SUCCESS':
+                    wallet = transaction.user.wallet_set.filter(crypto=transaction.crypto).first()
+                    user = transaction.user
+                    print(user)
+                    wallet = Wallet.objects.get(user=user)
+                    if wallet:
+                        wallet.balance += transaction.amount
+                        wallet.save()
 
+                        # Notify user that their deposit has been confirmed
+                        subject = f"Deposit Confirmed for {transaction.plan} Plan"
+                        message = (f"Dear {transaction.user.get_full_name},\n\n"
+                                   f"Your deposit of ${transaction.amount} for the {transaction.plan} plan "
+                                   f"has been confirmed and your wallet balance has been updated.\n\n"
+                                   f"Thank you for choosing our service.\n\n"
+                                   f"Best regards,\n{settings.COMPANY_NAME} Team")
+                        
+                        send_mail(
+                            subject,
+                            message,
+                            settings.DEFAULT_FROM_EMAIL,
+                            [transaction.user.email],
+                            fail_silently=True,
+                        )
+
+            self.message_user(request, "Selected transactions have been marked as confirmed.")
+        
+        except Exception as e:
+            messages.error(request, f"An error occurred while confirming transactions: {str(e)}")
 
     # Action to mark transactions as failed
     def mark_as_failed(self, request, queryset):

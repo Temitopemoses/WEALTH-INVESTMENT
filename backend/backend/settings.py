@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com", "mywealthwiseinvest.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com", "www.mywealthwiseinvest.com", "mywealthwiseinvest.mysql.pythonanywhere-services.com"]
 
 
 # Application definition
@@ -170,10 +170,11 @@ EMAIL_PORT = config("EMAIL_PORT", cast=int)
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")  # Your Zoho Mail email address
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")  # Your Zoho Mail password or app-specific password
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")  # The default from email address
+DEFAULT_FROM_EMAIL = "admin@mywealthwiseinvest.com"  # The default from email address
 
 
 ADMIN_EMAIL = ["admin@mywealthwiseinvest.com"]
+COMPANY_NAME = 'MyWealthWise Investments'
 
 COINBASE_API_KEY = config("COINBASE_API_KEY")
 

@@ -20,8 +20,24 @@
     <p>We're here to help with any questions or concerns you may have. Please fill out the form below, and our support team will respond to you as soon as possible.</p>
   </div>
 
+  <div class="container">
+    {% if messages %}
+    <div class="alert alert-{{type}} alert-dismissible" role="alert">
+        <div id="form_errors">
+            {% for message in messages %}
+            <strong> {{message}}</strong>
+            {% endfor %}
+        </div>
+        <button type="buttom" class="close" data-dismiss="alert" arial-label="Close">
+        <span arial-hidden="true">&times</span>
+        </button>
+    </div>
+    {% endif %}
+  </div>
+
   <div class="support-form-container">
-    <form id="support-form">
+    <form method="POST" action="{% url 'support' %}" id="support-form">
+      {% csrf_token %}
       <div class="form-group">
         <label for="name">Your Name</label>
         <input type="text" id="name" name="name" placeholder="Enter your name" required>

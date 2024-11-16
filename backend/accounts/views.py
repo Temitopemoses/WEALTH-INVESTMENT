@@ -22,14 +22,28 @@ print(settings.COINBASE_API_KEY)
 
 @login_required
 def dashboard(request):
+    user = request.user
+    wallet = Wallet.objects.get(user=user)
+    balance = str(wallet.balance)
 
-  user = request.user
-  wallet = Wallet.objects.get(user=user)
-  print(f"User acct balance ${wallet.balance}")
-  balance = str(wallet.balance)
-  print(balance)
-  context = {wallet: "wallet", balance: "balance"}
-  return render(request, 'account/dashboard.html', context)
+    recent_deposit = Transaction.objects.filter(transaction_type=Transaction.DEPOSIT, user=user).order_by('-timestamp').first()
+    
+    # Handle case when there might not be any deposit
+    if recent_deposit:
+        deposit_amount = recent_deposit.amount
+    else:
+        deposit_amount = 0.00
+    
+    # Correct the context dictionary
+    context = {
+        "wallet": wallet,
+        "balance": str(wallet.balance),
+        "recent_deposit": recent_deposit,
+        "deposit_amount": deposit_amount,
+    }
+    
+    return render(request, 'account/dashboard.html', context)
+
 
 
 @login_required
@@ -133,14 +147,14 @@ def deposit(request):
                    f"Crypto: {crypto}\n"
                    f"Transaction ID: {transaction_id}\n\n"
                    f"Please verify the transaction ID and update the status here: "
-                   f"http://127.0.0.1:8000/admin/accounts/transaction/.")
+                   f"https://www.mywealthwiseinvest.com/admin/accounts/transaction/.")
 
         # Attempt to send the email
         send_mail(
             subject,
             message,
             settings.DEFAULT_FROM_EMAIL,
-            [admin_email],  # Pass as a list to ensure correct format
+            settings.ADMIN_EMAIL,  # Pass as a list to ensure correct format
             fail_silently=False,
         )
     except Exception as email_error:

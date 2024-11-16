@@ -15,6 +15,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
 
+        .copy-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #DAA520; /* Adjust the color to match your theme */
+            font-size: 20px;
+            margin-left: 8px; /* Space between the button and wallet address */
+            outline: none; /* Remove focus outline */
+        }
+        
+        .copy-button:hover {
+            color: #0056b3; /* Change color on hover */
+        }
+        
+
+        /* Floating Button Styles */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;  /* Keep it 20px above the bottom of the screen */
+            right: 20px;   /* Keep it 20px from the right edge of the screen */
+            background-color: #DAA520; /* Change the background color */
+            color: #fff;
+            border: none; /* Remove default button border */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .floating-button:hover {
+            background-color: #DAA520; /* Hover color */
+        }
+
+        .floating-button:focus {
+            outline: none; /* Remove focus outline */
+        }
+
         #popup-notification {
             position: fixed;
             bottom: 20px; /* Positioned 20px from the bottom */
@@ -258,7 +303,16 @@
 
                     <h3 class="card-title">Make Deposit</h3>
 
-                    <p class="card-description"><small>Complete your payment with this BTC (Bitcoin) wallet below: <strong>bc1qkm35d92hue6lazxpekc2g6ugut9ss5n26gf4e</strong></small></p>
+                    <p class="card-description">
+                        <small>
+                            Complete your payment with this BTC (Bitcoin) wallet below: 
+                            <strong id="btc-wallet-address">bc1qkm35d92hue6lazxpekc2g6ugut9ss5n26gf4e</strong>
+                            <button class="copy-button" onclick="copyWalletAddress()">
+                                <i class="fas fa-copy"></i> <!-- FontAwesome Icon -->
+                            </button>
+                        </small>
+                    </p>
+                    
                     <div class="container">
                         <img class="qrcode-img" src="{% static "img/wallet_address_qrcode.jpg" %}" alt="wallet address" height="20%" width="20%">
                     </div>
@@ -309,12 +363,16 @@
                             <input type="text" name="transaction_id" placeholder="" class="form-control" required>
                         </div>
 
-                        <button class="btn btn-success btn-long" type="submit">Pay with Crypto</button>
+                        <button class="btn btn-success btn-long" type="submit">Make Deposit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Add this at the bottom of your base template or in a specific page -->
+    <button class="floating-button" title="Need Help?" onclick="window.location.href='{% url 'support' %}'">
+        <i class="fas fa-question-circle"></i> <!-- FontAwesome Icon for Support -->
+    </button>
 
   <!-- TradingView Widget -->
   <div class="tradingview-widget-container" style="width: 100%; height: 74px;">
@@ -411,7 +469,18 @@ color: #2962FF !important;
       showPopup(randomMessage);
     }
   
-    setInterval(triggerRandomPopup, 7000);
+    setInterval(triggerRandomPopup, 4000);
+  </script>
+
+  <script>
+    function copyWalletAddress() {
+        const walletAddress = document.getElementById("btc-wallet-address").textContent;
+        navigator.clipboard.writeText(walletAddress).then(() => {
+            alert("Wallet address copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
   </script>
 
 <!-- Bootstrap 5 JS -->

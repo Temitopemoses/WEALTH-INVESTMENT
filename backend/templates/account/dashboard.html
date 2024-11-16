@@ -16,6 +16,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
 
+        /* Floating Button Styles */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;  /* Keep it 20px above the bottom of the screen */
+            right: 20px;   /* Keep it 20px from the right edge of the screen */
+            background-color: #DAA520; /* Change the background color */
+            color: #fff;
+            border: none; /* Remove default button border */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .floating-button:hover {
+            background-color: #DAA520; /* Hover color */
+        }
+
+        .floating-button:focus {
+            outline: none; /* Remove focus outline */
+        }
+
         #popup-notification {
             position: fixed;
             bottom: 20px; /* Positioned 20px from the bottom */
@@ -240,18 +270,18 @@
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Total Balance</h5>
-                {% if wallet %}
-                    <p>${{wallet.balance}}</p>
-                {% else %}
-                    <p>$0.00</p>
-                {% endif %}
+                
+                    <p>${{ balance }}</p>
+                {% comment %} {% else %} {% endcomment %}
+                    {% comment %} <p>$0.00</p>
+                {% endif %} {% endcomment %}
             </div>
         </div>
         <!-- Example Card 2 -->
         <div class="col-lg-4 col-md-6">
             <div class="dashboard-card">
                 <h5>Recent Deposits</h5>
-                <p>{{balance}}</p>
+                <p>${{deposit_amount}}</p>
             </div>
         </div>
         <!-- Example Card 3 -->
@@ -307,7 +337,14 @@ color: #1848CC !important;
 color: #2962FF !important;
 }
 </style></div>
+
+<!-- Add this at the bottom of your base template or in a specific page -->
+<button class="floating-button" title="Need Help?" onclick="window.location.href='{% url 'support' %}'">
+    <i class="fas fa-question-circle"></i> <!-- FontAwesome Icon for Support -->
+</button>
 </div>
+
+
 <!-- TradingView Widget END -->
 <!-- Footer -->
 <footer class="footer">
