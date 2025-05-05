@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com", "www.mywealthwiseinvest.com", "mywealthwiseinvest.mysql.pythonanywhere-services.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "mywealthinvesments.pythonanywhere.com", "www.mywealthwiseinvest.com", "mywealthwiseinvest.mysql.pythonanywhere-services.com", "167.86.76.129"]
 
 
 # Application definition
